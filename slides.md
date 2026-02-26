@@ -1,8 +1,8 @@
 ---
 theme: none
-title: "Specification-Driven Development with spec-kit"
+title: "Specification-Driven Development: Making Intent the Source of Truth"
 info: "Regent company conference presentation"
-author: "[Presenter Name]"
+author: "Mikael Pettersson"
 colorSchema: dark
 aspectRatio: 16/9
 fonts:
@@ -13,79 +13,71 @@ mdc: true
 lineNumbers: true
 ---
 
-# Spec-Driven Development with AI
+# Spec-Driven Development
 
-<p class="text-regent-secondary text-xl mt-4">Making intent the source of truth</p>
+<p class="text-regent-secondary text-xl mt-4">Making Intent the Source of Truth</p>
+
+<p class="text-regent-secondary text-sm mt-6 opacity-80">CLAUDE.md rules and plan mode only get you so far.</p>
 
 <p class="text-regent-secondary text-sm opacity-60 mt-auto">
-  [Presenter Name] &middot; Regent All-Hands 2026
+  Mikael Pettersson &middot; Competence Conference 2026
 </p>
 
 <!--
-Welcome everyone. Today I'm going to talk about a fundamental shift in how we work with AI coding tools - moving from ad hoc prompting to structured, specification-driven development.
--->
-
----
-transition: fade
----
-
-# About Me
-
-<div class="grid grid-cols-2 gap-8 mt-8">
-<div>
-
-- **[Your Name]**
-- [Your Role] at Regent
-- [Relevant experience]
-- Passionate about developer productivity
-
-</div>
-<div class="flex items-center justify-center">
-  <img src="/images/regent-icon.svg" class="h-24 opacity-30" />
-</div>
-</div>
-
-<!--
-Brief intro - keep this to 30 seconds. Establish credibility for why you're presenting on this topic.
+Welcome everyone. Raise your hand if you use CLAUDE.md, .cursorrules, or some kind of rules file when working with AI. Great. And plan mode? Tickets? Good. You're already ahead of most teams. But today I want to talk about why those tools, as useful as they are, still leave a gap — and how we can close it.
 -->
 
 ---
 
-# The Promise vs. Reality
+# Where We Are Today
 
 <div class="mt-4">
 
 <v-click>
 
-<div class="grid grid-cols-2 gap-6">
-<div class="p-4 rounded bg-regent-master border-l-4 border-green-500">
+<div class="grid grid-cols-3 gap-4">
+<div class="p-4 rounded bg-regent-master border-t-3 border-green-500">
 
-### What we were promised
+### Rules files
+<div class="text-regent-secondary text-sm mt-1">
 
-- "10x productivity with AI"
-- "Just describe what you want"
-- "Ship features in minutes"
-- "AI handles the complexity"
+CLAUDE.md, .cursorrules — tells AI **how** to code. Formatting, patterns, conventions.
 
 </div>
-<div class="p-4 rounded bg-regent-master border-l-4 border-red-500">
+</div>
 
-### What actually happens
+<div class="p-4 rounded bg-regent-master border-t-3 border-green-500">
 
-- Inconsistent architecture across sessions
-- Contradicting implementations in the same project
-- Context lost every time you restart
-- "It works but nobody knows why"
+### Plan mode
+<div class="text-regent-secondary text-sm mt-1">
+
+Think before coding. Better than raw prompting. But plans are **ephemeral** — gone next session.
 
 </div>
+</div>
+
+<div class="p-4 rounded bg-regent-master border-t-3 border-green-500">
+
+### Tickets
+<div class="text-regent-secondary text-sm mt-1">
+
+Jira, GH Issues — tracks **work items**. But the AI interprets each ticket differently every time.
+
+</div>
+</div>
+
 </div>
 
 </v-click>
 
 <v-click>
 
-<div class="mt-4 text-center text-regent-secondary italic">
-"The tools are powerful. Our approach is not."
+<div class="mt-4 p-4 rounded bg-regent-master border-l-4 border-red-500">
+
+### The gap
+
+Rules tell the AI **how**. Tickets tell the AI **what** to work on. You can even add quality rules to CLAUDE.md — but enforcement is best-effort. Nothing **structurally ensures** the AI builds what you intended, with enforced compliance checks and traceability from intent to code.
+
 </div>
 
 </v-click>
@@ -93,7 +85,7 @@ Brief intro - keep this to 30 seconds. Establish credibility for why you're pres
 </div>
 
 <!--
-We've all seen the demos. AI writes an entire app in 5 minutes. Incredible. But then you try it on a real project with real constraints. You open Claude or Copilot, type a prompt, and hope for the best. This is what the community calls "vibe coding." The tools ARE powerful - that's not the problem. The problem is we're using a jet engine with a paper steering wheel.
+Let's start with where we are. Most of us already use rules files — CLAUDE.md, .cursorrules. That's good. Some of us use plan mode. Even better. We have Jira tickets. All useful tools. And yes, you can put quality rules in your CLAUDE.md — "always write tests first", "never skip error handling." But here's the thing: the AI TRIES to follow those rules. It doesn't always succeed. There's no structural checkpoint that says "stop, you skipped the tests." Plan mode helps you think, but those plans vanish when the session ends. The gap isn't that these tools are bad — they're great. The gap is that nothing ENFORCES compliance and traces intent through to code.
 -->
 
 ---
@@ -143,7 +135,7 @@ Also add rate limiting. And tests."
 </div>
 
 <!--
-Watch this progression. First prompt is vague, so the AI fills in the blanks with its own assumptions. We correct it, but now it rewrites from scratch with NEW assumptions. Each iteration diverges further from our original intent. This isn't an AI problem - it's a specification problem. Without a stable reference point, the AI is just guessing. And each guess compounds the previous one's errors.
+This happens even if you have CLAUDE.md rules and plan mode. Watch: first prompt is vague, so the AI fills in the blanks. Your rules file tells it to use TypeScript and your preferred patterns — great. But it still chooses JWT when you wanted sessions, because rules don't capture INTENT. You correct it, but now it rewrites from scratch. Plan mode helped you think it through, but that plan is gone — the AI is guessing again. Each iteration diverges further. This isn't an AI problem or a tooling problem. It's a specification problem.
 -->
 
 ---
@@ -203,7 +195,7 @@ When requirements change (and they will), vibe-coded systems resist modification
 </div>
 
 <!--
-Why does this matter NOW? Three trends are converging. First, AI is genuinely powerful enough to generate complex systems - which means it can generate the wrong complex system very efficiently. Second, wrong assumptions compound exponentially. By your fifth prompt, you're debugging a system whose foundations you never validated. Third, and this is the one that matters most for consulting: codebases that can't be reasoned about can't be adapted. When the client changes requirements - and they always do - a vibe-coded system fights back.
+Why does this matter NOW, when we already have rules and plan mode? Three trends are converging. First, AI is powerful enough to generate complex systems — which means rules files alone can't prevent it from generating the WRONG complex system. Second, wrong assumptions compound. Plan mode helps once, but it doesn't persist or enforce. By your fifth session, you're debugging foundations nobody validated. Third: codebases that can't be reasoned about can't be adapted. When the client changes requirements — and they always do — you need more than rules. You need structured, enforceable specifications.
 -->
 
 ---
@@ -259,7 +251,7 @@ Why does this matter NOW? Three trends are converging. First, AI is genuinely po
 </div>
 
 <!--
-SDD flips the entire relationship. Instead of code being the thing you write and docs being the afterthought, the SPECIFICATION becomes the primary artifact. Code is generated FROM specs. When something's wrong, you fix the spec, not the code. This changes everything - debugging, refactoring, adding features. The specification is your source of truth, and code becomes disposable. This is where the title comes from: intent IS the source of truth.
+This is the layer that sits above rules files and tickets. Rules tell the AI how to write code. Tickets tell it what to work on. But SDD flips the relationship entirely: the SPECIFICATION — your intent — becomes the primary artifact. Code is generated FROM specs. When something's wrong, you fix the spec, not the code. Your CLAUDE.md still governs style. Your tickets still track work. But the spec governs WHAT gets built and WHY. That's the missing layer.
 -->
 
 ---
@@ -304,7 +296,7 @@ SDD flips the entire relationship. Instead of code being the thing you write and
 </div>
 
 <!--
-Spec-kit is GitHub's official open source toolkit for specification-driven development. It provides the templates, commands, and workflow structure to make SDD practical. It's not tied to one AI tool - it works with Copilot, Claude Code, Gemini CLI, and others. The six commands map to distinct phases that we'll walk through next.
+So how do you actually DO specification-driven development? This is where spec-kit comes in. It's GitHub's open source toolkit that provides the structure, commands, and quality gates. Think of it as the missing layer between your rules file and your tickets. It works with any AI tool — Copilot, Claude Code, Gemini CLI. Six commands, each mapping to a phase. Let me walk you through them.
 -->
 
 ---
@@ -325,9 +317,9 @@ Spec-kit is GitHub's official open source toolkit for specification-driven devel
 CLAUDE.md, .cursorrules, copilot-instructions...
 
 - Tell AI **how** to code
-- Static instructions
-- No quality gates
-- No structured workflow
+- Can include quality rules
+- But enforcement is **best-effort**
+- AI may forget or deprioritize
 
 </div>
 </div>
@@ -337,12 +329,12 @@ CLAUDE.md, .cursorrules, copilot-instructions...
 ### Tickets + Plan mode
 <div class="text-regent-secondary mt-1">
 
-Jira, GH Issues, Azure Boards...
+Jira, GH Issues, plan mode...
 
 - Describe **work items**
-- No constitutional enforcement
+- Plans help thinking but are **ephemeral**
 - AI interprets differently each time
-- Context lost between sessions
+- No structured validation step
 
 </div>
 </div>
@@ -355,8 +347,8 @@ Jira, GH Issues, Azure Boards...
 Structured specification workflow
 
 - Defines **what** and **why**
-- Quality gates block bad specs
-- Constitutional consistency
+- Quality gates **block** bad specs
+- Compliance checked at every step
 - Traceable: intent → code
 
 </div>
@@ -379,7 +371,7 @@ Structured specification workflow
 </div>
 
 <!--
-This is the most common question I get. "I already have CLAUDE.md files and Jira tickets, why do I need another tool?" The answer is they solve different problems. Rules files like CLAUDE.md tell the AI HOW to code - formatting, patterns, conventions. Tickets describe work items - what needs to be done. But neither provides structured SPECIFICATIONS with quality gates. Spec-kit fills the gap between "here's a ticket" and "here's working code." It ensures that before any code is generated, the intent is fully specified, ambiguities are resolved, and the architecture is planned. Your CLAUDE.md still tells the AI to use TypeScript and your preferred patterns. Your tickets still track progress. But spec-kit ensures what gets built actually matches what was intended.
+Let's go deeper on the gap. "Can't I just put quality gates in CLAUDE.md?" You can — and you should. But CLAUDE.md enforcement is best-effort. The AI TRIES to follow your rules, but nothing structurally blocks it from proceeding if it doesn't. In a long session, rules get deprioritized. There's no checkpoint that says "stop — you violated Article 2." Plan mode helps you think, but those plans vanish when the session ends. Spec-kit adds the missing structural layer: explicit compliance checks at every workflow step. It doesn't replace your rules file — it enforces the things your rules file can only ask for.
 -->
 
 ---
@@ -419,7 +411,7 @@ The feedback loop goes back to **specifications**, not to code.
 </v-click>
 
 <!--
-Here's the full workflow. Six steps, each building on the last. But pay attention to that feedback arrow — it goes from implementation back to SPECIFY, not back to code. That arrow is what makes this the opposite of waterfall. In waterfall, you can't go back. In SDD, going back is the whole point — you iterate on specs, not on code. The cost of changing a spec is minutes. The cost of changing code is hours.
+Here's the full workflow. Six steps, each building on the last. This is what plan mode WOULD be if plans persisted, had quality gates, and enforced constitutional compliance. Pay attention to that feedback arrow — it goes from implementation back to SPECIFY, not back to code. That arrow is what makes this the opposite of waterfall. In waterfall, you can't go back. In SDD, going back is the whole point — you iterate on specs, not on code.
 -->
 
 ---
@@ -487,7 +479,7 @@ exceptions. Fail gracefully, log clearly.
 </div>
 
 <!--
-The constitution is your project's non-negotiable rules. Think of it like a real constitution — it governs everything that follows. Articles marked NON-NEGOTIABLE are hard quality gates. The AI literally cannot proceed if a spec violates them. This is the difference between "please follow these guidelines" and "the system enforces these rules." Your CLAUDE.md ASKS the AI to write tests. The constitution BLOCKS progress until tests exist.
+The constitution is like CLAUDE.md's big sibling. Your rules file ASKS the AI to follow conventions. The constitution BLOCKS progress until compliance is achieved. Articles marked NON-NEGOTIABLE are hard quality gates — the AI cannot proceed if a spec violates them. This is the difference between "please follow these guidelines" and "the system enforces these rules." Your CLAUDE.md says "write tests." The constitution says "no tests, no progress."
 -->
 
 ---
@@ -1220,7 +1212,7 @@ layout: center
   <div class="text-2xl text-regent-light mb-6">Questions?</div>
 
   <div class="text-regent-secondary space-y-2">
-    <p>[Presenter Name] &middot; [presenter@regent.se]</p>
+    <p>Mikael Pettersson &middot; mikael.pettersson@regent.se</p>
     <p class="text-sm">github.com/github/spec-kit</p>
   </div>
 </div>
