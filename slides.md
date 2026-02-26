@@ -51,34 +51,30 @@ Brief intro - keep this to 30 seconds. Establish credibility for why you're pres
 
 ---
 
-# The Problem: Vibe Coding
+# The Promise vs. Reality
 
-<div class="mt-6">
-
-<v-click>
-
-> "Just prompt the AI and see what happens"
-
-</v-click>
+<div class="mt-4">
 
 <v-click>
 
-<div class="mt-8 grid grid-cols-2 gap-6">
-<div class="p-4 rounded bg-regent-master">
+<div class="grid grid-cols-2 gap-6">
+<div class="p-4 rounded bg-regent-master border-l-4 border-green-500">
 
-### What we do now
-- Open chat, start typing
-- Hope the AI understands
-- Fix what comes out
-- Repeat until it works
+### What we were promised
+
+- "10x productivity with AI"
+- "Just describe what you want"
+- "Ship features in minutes"
+- "AI handles the complexity"
 
 </div>
-<div class="p-4 rounded bg-regent-master">
+<div class="p-4 rounded bg-regent-master border-l-4 border-red-500">
 
 ### What actually happens
-- Inconsistent architecture
-- Contradicting implementations
-- Context lost between sessions
+
+- Inconsistent architecture across sessions
+- Contradicting implementations in the same project
+- Context lost every time you restart
 - "It works but nobody knows why"
 
 </div>
@@ -86,15 +82,23 @@ Brief intro - keep this to 30 seconds. Establish credibility for why you're pres
 
 </v-click>
 
+<v-click>
+
+<div class="mt-4 text-center text-regent-secondary italic">
+"The tools are powerful. Our approach is not."
+</div>
+
+</v-click>
+
 </div>
 
 <!--
-We've all been there. You open Copilot or Claude, type a prompt, and hope for the best. This is what the community calls "vibe coding" - development driven by intuition and hope rather than structured intent. The problem isn't the AI - it's our approach.
+We've all seen the demos. AI writes an entire app in 5 minutes. Incredible. But then you try it on a real project with real constraints. You open Claude or Copilot, type a prompt, and hope for the best. This is what the community calls "vibe coding." The tools ARE powerful - that's not the problem. The problem is we're using a jet engine with a paper steering wheel.
 -->
 
 ---
 
-# What Goes Wrong
+# The Decay Spiral
 
 <div class="mt-4">
 
@@ -139,26 +143,86 @@ Also add rate limiting. And tests."
 </div>
 
 <!--
-Watch this progression. First prompt is vague, so the AI makes assumptions. We correct it, but now it rewrites from scratch with NEW assumptions. Each iteration diverges further from our original intent. This is the fundamental problem: without a structured specification, the AI has no stable reference point.
+Watch this progression. First prompt is vague, so the AI fills in the blanks with its own assumptions. We correct it, but now it rewrites from scratch with NEW assumptions. Each iteration diverges further from our original intent. This isn't an AI problem - it's a specification problem. Without a stable reference point, the AI is just guessing. And each guess compounds the previous one's errors.
 -->
 
 ---
 
-# A Better Way: Specification-Driven Development
+# Why Now: Three Converging Trends
 
-<div class="mt-6 space-y-4">
+<div class="mt-4 grid grid-cols-3 gap-5">
 
 <v-click>
 
-**The core insight:** Don't tell the AI *how* to code. Tell it *what* you need and *why*.
+<div class="p-4 rounded bg-regent-master border-t-3 border-regent-cyan">
+
+### AI Capability Threshold
+
+AI is now powerful enough to generate **the wrong thing at scale**.
+
+<div class="text-regent-secondary text-sm mt-3">
+A bad assumption at line 1 becomes 500 lines of confidently wrong code. The better the AI gets, the more dangerous unstructured prompting becomes.
+</div>
+
+</div>
 
 </v-click>
 
 <v-click>
 
-<div class="p-6 rounded bg-regent-master border-l-4 border-regent-cyan mt-6">
+<div class="p-4 rounded bg-regent-master border-t-3 border-regent-cyan">
 
-### The Inversion
+### Exponential Complexity
+
+Wrong assumptions **compound**.
+
+<div class="text-regent-secondary text-sm mt-3">
+One vague prompt creates an architecture. The next prompt builds on that architecture. By prompt 5, you're debugging a castle built on sand.
+</div>
+
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="p-4 rounded bg-regent-master border-t-3 border-regent-cyan">
+
+### Acceleration of Change
+
+Codebases that can't be reasoned about **can't be adapted**.
+
+<div class="text-regent-secondary text-sm mt-3">
+When requirements change (and they will), vibe-coded systems resist modification because nobody — including the AI — understands the intent behind the code.
+</div>
+
+</div>
+
+</v-click>
+
+</div>
+
+<!--
+Why does this matter NOW? Three trends are converging. First, AI is genuinely powerful enough to generate complex systems - which means it can generate the wrong complex system very efficiently. Second, wrong assumptions compound exponentially. By your fifth prompt, you're debugging a system whose foundations you never validated. Third, and this is the one that matters most for consulting: codebases that can't be reasoned about can't be adapted. When the client changes requirements - and they always do - a vibe-coded system fights back.
+-->
+
+---
+
+# The Inversion
+
+<div class="mt-3 space-y-3">
+
+<v-click>
+
+<div class="p-4 rounded bg-regent-master border-l-4 border-regent-cyan">
+
+**The core insight:** Don't tell the AI *how* to code. Tell it *what* you need and *why*.
+
+</div>
+
+</v-click>
+
+<v-click>
 
 | Traditional | Spec-Driven |
 |---|---|
@@ -167,20 +231,35 @@ Watch this progression. First prompt is vague, so the AI makes assumptions. We c
 | Fix bugs in code | Fix bugs in specs |
 | Refactor = rewrite code | Refactor = restructure specs |
 
-</div>
-
 </v-click>
 
 <v-click>
 
-> "Specifications become executable through AI, making intent the source of truth"
+<div class="grid grid-cols-3 gap-4 mt-2 text-center text-sm">
+
+<div class="p-2 rounded bg-regent-master">
+<div class="text-regent-bright font-bold">Debugging</div>
+<div class="text-regent-secondary mt-1">Fix the spec, regenerate</div>
+</div>
+
+<div class="p-2 rounded bg-regent-master">
+<div class="text-regent-bright font-bold">Refactoring</div>
+<div class="text-regent-secondary mt-1">Restructure the spec, regenerate</div>
+</div>
+
+<div class="p-2 rounded bg-regent-master">
+<div class="text-regent-bright font-bold">New Features</div>
+<div class="text-regent-secondary mt-1">Extend the spec, regenerate</div>
+</div>
+
+</div>
 
 </v-click>
 
 </div>
 
 <!--
-SDD flips the relationship. Instead of code being the primary artifact that we document after the fact, the SPECIFICATION becomes the primary artifact. Code is generated FROM specs. When something's wrong, you fix the spec, not the code. This is a profound shift.
+SDD flips the entire relationship. Instead of code being the thing you write and docs being the afterthought, the SPECIFICATION becomes the primary artifact. Code is generated FROM specs. When something's wrong, you fix the spec, not the code. This changes everything - debugging, refactoring, adding features. The specification is your source of truth, and code becomes disposable. This is where the title comes from: intent IS the source of truth.
 -->
 
 ---
@@ -340,12 +419,12 @@ The feedback loop goes back to **specifications**, not to code.
 </v-click>
 
 <!--
-Here's the full workflow visualized. Notice the feedback arrow - when implementation reveals a problem, you go back to the SPECIFICATION, not to the code. This is what makes the approach self-correcting. Each phase builds on the previous one, creating a traceable chain from intent to implementation.
+Here's the full workflow. Six steps, each building on the last. But pay attention to that feedback arrow — it goes from implementation back to SPECIFY, not back to code. That arrow is what makes this the opposite of waterfall. In waterfall, you can't go back. In SDD, going back is the whole point — you iterate on specs, not on code. The cost of changing a spec is minutes. The cost of changing code is hours.
 -->
 
 ---
 
-# Step 1: Constitution
+# The Constitution & the 9 Articles
 
 <div class="mt-2">
 
@@ -353,33 +432,53 @@ Here's the full workflow visualized. Notice the feedback arrow - when implementa
 
 <v-click>
 
-<div class="mt-3 p-3 rounded bg-regent-master">
+<div class="mt-2 grid grid-cols-2 gap-3 text-sm">
+
+<div class="p-3 rounded bg-regent-master">
 
 ```markdown
-# Project Constitution
-
-## Article 1: Library-First Principle
-All features must be implemented as standalone,
-reusable libraries with clean public APIs.
+## Article 1: Library-First [NON-NEGOTIABLE]
+All features as standalone, reusable libraries
+with clean public APIs.
 
 ## Article 2: Test-First Imperative [NON-NEGOTIABLE]
-Tests must exist BEFORE implementation code.
-No exceptions. No "we'll add tests later."
+Tests BEFORE implementation. No exceptions.
+No "we'll add tests later."
 
 ## Article 3: Simplicity
-Choose the simplest solution that meets requirements.
+Simplest solution that meets requirements.
 Avoid premature abstraction.
 ```
 
 </div>
 
+<div class="p-3 rounded bg-regent-master">
+
+```markdown
+## Article 4: Single Responsibility
+Each module does one thing well.
+Clear boundaries, explicit contracts.
+
+## Article 5: Documentation as Code
+Every public API is documented inline.
+If it's not documented, it doesn't exist.
+
+## Article 6: Error Boundaries [NON-NEGOTIABLE]
+All external calls wrapped. No unhandled
+exceptions. Fail gracefully, log clearly.
+```
+
+</div>
+
+</div>
+
 </v-click>
 
 <v-click>
 
-<div class="mt-2 text-regent-secondary text-sm">
+<div class="mt-2 p-2 rounded bg-regent-master border-l-4 border-regent-cyan text-sm">
 
-These are **immutable rules** - the AI must comply with every article. They prevent architectural drift across all generated code.
+**Quality gate:** The AI checks every spec and plan against every article. `[NON-NEGOTIABLE]` articles cause hard failures — the workflow stops until compliance is achieved.
 
 </div>
 
@@ -388,76 +487,60 @@ These are **immutable rules** - the AI must comply with every article. They prev
 </div>
 
 <!--
-The constitution is your project's non-negotiable rules. Think of it like a real constitution - it governs everything that follows. You define principles like "all features are standalone libraries" or "tests must exist before implementation." The AI must comply with EVERY article. This prevents the architectural drift we see with vibe coding.
+The constitution is your project's non-negotiable rules. Think of it like a real constitution — it governs everything that follows. Articles marked NON-NEGOTIABLE are hard quality gates. The AI literally cannot proceed if a spec violates them. This is the difference between "please follow these guidelines" and "the system enforces these rules." Your CLAUDE.md ASKS the AI to write tests. The constitution BLOCKS progress until tests exist.
 -->
 
 ---
 
-# Step 2: Specify
+# From Intent to Architecture
 
-<div class="mt-4">
-
-> Focus on **WHAT** and **WHY** - never HOW
+<div class="mt-2 grid grid-cols-3 gap-3 text-sm">
 
 <v-click>
 
-<div class="mt-4 p-4 rounded bg-regent-master">
+<div class="p-3 rounded bg-regent-master border-t-3 border-[#0099CC]">
+
+### Specify
+<div class="text-regent-secondary text-xs mb-2">What & Why — never How</div>
 
 ```markdown
-# Feature: User Authentication
+# Feature: User Auth
 
 ## What
-Users can sign in with email/password or SSO.
-Sessions persist across browser restarts.
-Failed attempts are rate-limited after 5 tries.
+Sign in with email/password or SSO.
+Sessions persist across restarts.
+Rate-limited after 5 failed attempts.
 
 ## Why
-- Security: protect user accounts from unauthorized access
-- UX: reduce friction for returning users
-- Compliance: meet SOC2 audit requirements
-
-## Acceptance Criteria
-- [ ] Login with email/password works
-- [ ] SSO redirects to provider and back
-- [ ] Session persists for 30 days
-- [ ] Rate limit kicks in after 5 failed attempts
+- Security: protect accounts
+- UX: reduce return-user friction
+- Compliance: SOC2 requirements
 ```
 
 </div>
 
 </v-click>
 
-</div>
-
-<!--
-Notice what's NOT here: no mention of JWT vs sessions, no database schemas, no framework choices. The specification captures INTENT - what the system should do and why. Technology decisions come later, in the planning phase. This separation is key - it prevents premature commitment to implementation details.
--->
-
----
-
-# Step 3: Clarify
-
-<div class="mt-2">
-
-> Surface and resolve ambiguities **before** any code is written
-
 <v-click>
 
-<div class="mt-3 p-3 rounded bg-regent-master">
+<div class="p-3 rounded bg-regent-master border-t-3 border-[#3FCDFA]">
+
+### Clarify
+<div class="text-regent-secondary text-xs mb-2">Surface every ambiguity</div>
 
 ```markdown
 # Clarification Report
 
 ## Resolved
-- Q: What SSO providers?  A: Azure AD only (per IT policy)
+- SSO: Azure AD only (IT policy)
 
-## Needs Clarification
-- [NEEDS CLARIFICATION] Password complexity rules?
-  → Recommendation: NIST 800-63B (min 8 chars, no complexity rules)
-- [NEEDS CLARIFICATION] Rate limit window - per IP or per account?
-  → Recommendation: per account, 15-minute cooldown
-- [NEEDS CLARIFICATION] Should locked accounts notify admins?
-  → Recommendation: Yes, via existing alert channel
+## [NEEDS CLARIFICATION]
+- Password rules?
+  → Rec: NIST 800-63B
+- Rate limit: per IP or account?
+  → Rec: per account, 15min
+- Locked accounts notify admins?
+  → Rec: Yes, existing alerts
 ```
 
 </div>
@@ -466,52 +549,24 @@ Notice what's NOT here: no mention of JWT vs sessions, no database schemas, no f
 
 <v-click>
 
-<div class="mt-2 text-regent-secondary text-sm">
+<div class="p-3 rounded bg-regent-master border-t-3 border-[#00ACE6]">
 
-The `[NEEDS CLARIFICATION]` markers are a **quality gate** - no planning begins until all ambiguities are resolved.
-
-</div>
-
-</v-click>
-
-</div>
-
-<!--
-This is where spec-kit really shines. The clarify step forces you to confront ambiguities BEFORE writing any code. Those NEEDS CLARIFICATION markers act as a quality gate. The AI won't proceed to planning until they're all resolved. How many times have you started coding only to realize halfway through that the requirements were ambiguous? This step eliminates that.
--->
-
----
-
-# Step 4: Plan
-
-<div class="mt-2">
-
-> NOW we talk technology - translate specs into architecture
-
-<v-click>
-
-<div class="mt-3 p-3 rounded bg-regent-master text-sm">
+### Plan
+<div class="text-regent-secondary text-xs mb-2">NOW we talk technology</div>
 
 ```markdown
-# Technical Plan: User Authentication
+# Technical Plan
 
 ## Architecture
-- Session-based auth with Redis store
-- Express middleware for route protection
-- Azure AD SDK for SSO integration
-
-## Components
-1. AuthService - core auth logic (standalone library)
-2. SessionStore - Redis-backed session management
-3. RateLimiter - per-account attempt tracking
-4. SSOBridge - Azure AD OAuth2 flow
-
-## Dependencies
-- express-session + connect-redis
-- @azure/msal-node, rate-limiter-flexible
+- Session-based (Redis store)
+- Express middleware
+- Azure AD SDK for SSO
 
 ## Constitutional Compliance
-✅ Art 1: Standalone libraries  ✅ Art 2: Test-first  ✅ Art 3: No custom crypto
+✅ Art 1: Standalone libraries
+✅ Art 2: Test-first
+✅ Art 3: Simplest approach
+✅ Art 6: Error boundaries
 ```
 
 </div>
@@ -520,74 +575,92 @@ This is where spec-kit really shines. The clarify step forces you to confront am
 
 </div>
 
+<v-click>
+
+<div class="mt-2 text-center text-regent-secondary text-sm italic">
+15 minutes of specification prevents 3 hours of rework.
+</div>
+
+</v-click>
+
 <!--
-NOW we bring in technology. The plan translates the specification into concrete architecture. Notice how it explicitly checks constitutional compliance at the bottom. Each component maps directly to a spec requirement. The tech choices are justified by the spec, not by personal preference or AI assumption. This is traceable, reviewable architecture.
+Here's the middle three steps in action. SPECIFY captures pure intent — what and why, never how. CLARIFY forces you to confront every ambiguity BEFORE code. Those NEEDS CLARIFICATION markers are quality gates — no planning until they're resolved. Only in PLAN do we bring in technology. Notice the constitutional compliance check at the bottom — every plan is validated against the constitution. This whole process takes about 15 minutes. Compare that to 3 hours of prompt-and-pray.
 -->
 
 ---
 
-# Steps 5 & 6: Tasks and Implement
+# Tasks: Parallel & Traceable
 
 <div class="mt-2 grid grid-cols-2 gap-4">
 
 <div>
 
-### Decompose
-
 <v-click>
 
+<div class="p-3 rounded bg-regent-master text-sm">
+
 ```markdown
-# Tasks (auto-generated from plan)
+# Tasks (from plan)
 
 ## Task 1: AuthService core
 - Branch: feat/auth-service
 - Tests: unit tests for login flow
+- Constitutional: Art 1, 2, 6
 - Deps: none
+
 ## Task 2: SessionStore
 - Branch: feat/session-store
 - Tests: integration with Redis
 - Deps: Task 1
+
 ## Task 3: RateLimiter
 - Branch: feat/rate-limiter
 - Tests: attempt counting, cooldown
 - Deps: Task 1
+
 ## Task 4: SSOBridge
 - Branch: feat/sso-bridge
 - Tests: OAuth2 flow mocks
 - Deps: Task 1, Task 2
 ```
 
+</div>
+
 </v-click>
 
 </div>
 
 <div>
 
-### Execute
-
 <v-click>
 
-<div class="space-y-2 mt-5">
+<div class="space-y-2">
 
 <div class="p-2 rounded bg-regent-master border-l-4 border-[#0099CC] text-sm">
-Task 1 is the foundation - runs first
+<strong>Dependency-aware:</strong> Task 1 runs first as foundation
 </div>
 
 <div class="p-2 rounded bg-regent-master border-l-4 border-[#3FCDFA] text-sm">
-Tasks 2 & 3 can run <strong>in parallel</strong>
+<strong>Parallel execution:</strong> Tasks 2 & 3 run simultaneously — two AI agents, separate branches
 </div>
 
 <div class="p-2 rounded bg-regent-master border-l-4 border-[#00ACE6] text-sm">
-Task 4 depends on 1 + 2, runs last
+<strong>Isolated & reviewable:</strong> Each task on its own branch with its own tests
 </div>
 
-<div class="mt-3 p-2 rounded bg-regent-master text-sm">
+<div class="mt-3 p-3 rounded bg-regent-master text-sm">
 
-Each task:
-- Has its own Git branch
-- Includes tests (constitution!)
-- Maps to one spec requirement
-- Is independently reviewable
+### Every task is traceable
+
+```
+Acceptance Criteria
+  ↓ traces to
+Specification (What & Why)
+  ↓ validated by
+Constitution (Articles)
+  ↓ implemented as
+Tests → Code
+```
 
 </div>
 
@@ -600,70 +673,12 @@ Each task:
 </div>
 
 <!--
-The plan is decomposed into tasks automatically. Each task gets its own branch, has explicit dependencies, and includes tests from day one - remember, the constitution demands it. Independent tasks can run in parallel - multiple AI agents working simultaneously. Each task is small enough to review confidently. This is where the structured approach pays dividends in speed.
+Tasks are auto-generated from the plan, each with its own Git branch, dependency graph, and test requirements. Independent tasks can run in parallel — two AI agents on separate branches, no conflicts. Each task maps back to the spec, which maps back to the constitution. This traceability is what makes the code reviewable. When you review a PR, you can see WHY the code exists, not just WHAT it does.
 -->
 
 ---
 
-# A Spec Evolves
-
-<div class="mt-2">
-
-````md magic-move
-```markdown
-# Feature: User Authentication
-
-## What
-Users can sign in with email/password or SSO.
-Sessions persist across browser restarts.
-Failed attempts are rate-limited after 5 tries.
-```
-```markdown
-# Technical Plan: User Authentication
-
-## Architecture
-- Session-based auth (Redis store)
-- Express middleware for route protection
-- Azure AD SDK for SSO
-
-## Components
-- AuthService → core logic (standalone library)
-- SessionStore → Redis session management
-- RateLimiter → per-account tracking
-- SSOBridge → Azure AD OAuth2 flow
-```
-```markdown
-# Task 1: AuthService Core
-
-Branch: feat/auth-service
-Status: ready
-
-## Implementation
-- src/lib/auth-service/index.ts
-- src/lib/auth-service/auth-service.test.ts
-
-## Acceptance
-- [ ] Login with valid credentials returns session
-- [ ] Login with invalid credentials returns error
-- [ ] Matches spec: "Users can sign in with email/password"
-```
-````
-
-</div>
-
-<div class="mt-2 text-center text-regent-secondary text-sm">
-
-Specification → Plan → Task: a traceable chain from intent to implementation
-
-</div>
-
-<!--
-Watch the evolution. We start with a pure specification - what and why. It transforms into a technical plan with architecture decisions. Then it becomes a concrete task with test criteria that trace back to the original spec. Every line of code that gets generated can be traced back to a stated intent. This traceability is what makes SDD so powerful.
--->
-
----
-
-# Code from Specs
+# From Spec to Working Code
 
 <div class="mt-2">
 
@@ -673,9 +688,10 @@ Watch the evolution. We start with a pure specification - what and why. It trans
 - [ ] Login with valid credentials returns session
 - [ ] Login with invalid credentials returns error
 - [ ] Rate limit after 5 failed attempts
+- [ ] Session persists for 30 days
 ```
 ```typescript
-// auth-service.test.ts - Tests FIRST (constitutional mandate)
+// auth-service.test.ts — Tests FIRST (constitutional mandate)
 
 describe('AuthService', () => {
   it('returns session for valid credentials', async () => {
@@ -699,7 +715,7 @@ describe('AuthService', () => {
 })
 ```
 ```typescript
-// auth-service.ts - Implementation generated from spec + tests
+// auth-service.ts — Implementation generated from spec + tests
 
 export class AuthService {
   constructor(
@@ -728,31 +744,36 @@ export class AuthService {
 
 </div>
 
+<div class="mt-1 text-center text-regent-secondary text-sm">
+
+Acceptance Criteria → Tests FIRST → Implementation. Every line traceable to intent.
+
+</div>
+
 <!--
-Here's the magic. Acceptance criteria become tests - FIRST, because the constitution demands it. Tests define the contract. Only then does the implementation get generated. Every method, every branch, every error case traces back to a stated acceptance criterion which traces back to the original spec. When a test fails, you know EXACTLY which spec requirement is broken.
+Here's the magic. Acceptance criteria from the spec become tests — FIRST, because the constitution demands it. Tests define the contract. Only then does the implementation get generated. Every method, every branch, every error case traces back to a stated acceptance criterion which traces back to the original spec. When a test fails, you know EXACTLY which spec requirement is broken. This is the chain: intent → spec → test → code.
 -->
 
 ---
 
-# Use Cases
+# "This is just waterfall"
 
-<div class="mt-6 grid grid-cols-3 gap-6">
+<div class="mt-4 grid grid-cols-2 gap-6">
 
 <v-click>
 
-<div class="p-6 rounded bg-regent-master text-center">
+<div class="p-4 rounded bg-regent-master">
 
-### Greenfield
+### Waterfall
 
-<div class="text-4xl mt-4 mb-4">🏗️</div>
+- Specs written once, frozen
+- Change = rewrite the project plan
+- Months between spec and code
+- Feedback loop: **none**
+- "We'll test at the end"
 
-Start from scratch with
-**full SDD workflow**
-
-Constitution → Spec → Plan → Build
-
-<div class="mt-4 text-regent-secondary text-sm">
-Best for: new projects, POCs, hackathons
+<div class="mt-3 text-regent-secondary text-sm italic">
+Designed for a world where changing direction was expensive.
 </div>
 
 </div>
@@ -761,19 +782,85 @@ Best for: new projects, POCs, hackathons
 
 <v-click>
 
-<div class="p-6 rounded bg-regent-master text-center">
+<div class="p-4 rounded bg-regent-master border border-[#0099CC]">
 
-### New Features
+### Specification-Driven Development
 
-<div class="text-4xl mt-4 mb-4">✨</div>
+- Specs are **living documents**
+- Change = update spec, regenerate
+- Minutes between spec and code
+- Feedback loop: **continuous**
+- "Tests are generated FIRST"
 
-Add to existing codebases
-with **spec-first features**
+<div class="mt-3 text-regent-secondary text-sm italic">
+Designed for a world where AI makes changing direction cheap.
+</div>
 
-Spec new feature → Plan within constraints → Build
+</div>
 
-<div class="mt-4 text-regent-secondary text-sm">
-Best for: day-to-day feature work
+</v-click>
+
+</div>
+
+<v-click>
+
+<div class="mt-4 text-center">
+
+Changing a spec in waterfall meant **rewriting the project plan**.
+<br/>In SDD, it means **re-running a command**.
+
+</div>
+
+</v-click>
+
+<!--
+This is the number one objection, so let's address it head-on. Waterfall and SDD both start with specifications, but that's where the similarity ends. Waterfall specs are frozen — changing them is expensive and political. SDD specs are living documents — changing them is literally the workflow. The feedback arrow on the workflow diagram? That's the opposite of waterfall. Waterfall says "don't go back." SDD says "going back is cheap, so do it early and often."
+-->
+
+---
+
+# "This slows us down"
+
+<div class="mt-6 space-y-4">
+
+<v-click>
+
+<div class="text-xl text-center">
+Vibe coding is fast — until it isn't.
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="grid grid-cols-2 gap-6 mt-4">
+
+<div class="p-4 rounded bg-regent-master text-center">
+
+### Vibe Coding
+
+<div class="text-3xl font-bold text-red-400 mt-2">~3 hours</div>
+
+<div class="text-regent-secondary text-sm mt-2">
+Prompt → fix → re-prompt → fix<br/>
+→ realize assumptions were wrong<br/>
+→ start over → fix → ship with doubt
+</div>
+
+</div>
+
+<div class="p-4 rounded bg-regent-master text-center border border-[#0099CC]">
+
+### Spec-Driven
+
+<div class="text-3xl font-bold text-green-400 mt-2">~45 minutes</div>
+
+<div class="text-regent-secondary text-sm mt-2">
+15 min spec → 5 min clarify<br/>
+→ 5 min plan → generate<br/>
+→ review traceable code → ship with confidence
+</div>
+
 </div>
 
 </div>
@@ -782,21 +869,211 @@ Best for: day-to-day feature work
 
 <v-click>
 
-<div class="p-6 rounded bg-regent-master text-center">
+<div class="mt-4 text-center text-regent-secondary italic">
+Remember the decay spiral? 15 minutes of specification prevents that entire cycle.
+</div>
+
+</v-click>
+
+</div>
+
+<!--
+"But writing specs takes time!" Yes, about 15 minutes. Compare that to the decay spiral we saw earlier - 3 hours of prompt, fix, re-prompt, hope. The spec pays for itself on the first feature. And it compounds: the second feature is faster because the constitution already exists. The third feature is faster because patterns are established. Vibe coding has constant cost. SDD has decreasing cost over time.
+-->
+
+---
+
+# "AI is good enough without this"
+
+<div class="mt-6 space-y-4">
+
+<v-click>
+
+<div class="p-4 rounded bg-regent-master border-l-4 border-regent-cyan">
+<div class="text-lg">
+
+A powerful tool with vague instructions is a **liability**, not a productivity boost.
+
+</div>
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="grid grid-cols-2 gap-6 mt-2">
+
+<div class="p-4 rounded bg-regent-master">
+
+### What AI excels at
+- Generating code from clear specs
+- Following established patterns
+- Maintaining consistency within constraints
+- Translating intent into implementation
+
+</div>
+
+<div class="p-4 rounded bg-regent-master">
+
+### What AI cannot do
+- Read your mind
+- Maintain context across sessions
+- Self-correct without a reference point
+- Know your project's non-negotiables
+
+</div>
+
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="mt-3 text-center text-regent-secondary">
+SDD doesn't replace AI capability — it <strong>channels</strong> it.<br/>
+The better the AI gets, the more valuable structured specifications become.
+</div>
+
+</v-click>
+
+</div>
+
+<!--
+"AI is getting so good, I don't need all this structure." Here's the thing: the better AI gets at generating code, the MORE important it is to give it the right instructions. Remember the three converging trends? A powerful tool with vague instructions generates wrong things at scale. SDD doesn't slow the AI down — it channels its power. Think of it this way: a race car without a steering wheel is just a very fast way to crash.
+-->
+
+---
+
+# "What about when requirements change?"
+
+<div class="mt-6 space-y-4">
+
+<v-click>
+
+<div class="grid grid-cols-2 gap-6">
+
+<div class="p-4 rounded bg-regent-master">
+
+### Without SDD
+
+```
+Requirements change...
+→ Find all affected code (where IS it?)
+→ Manually update each file
+→ Hope nothing else breaks
+→ Re-test everything manually
+→ Pray the AI doesn't contradict
+  its earlier output
+```
+
+<div class="text-regent-secondary text-sm mt-2">
+Patch the code and hope.
+</div>
+
+</div>
+
+<div class="p-4 rounded bg-regent-master border border-[#0099CC]">
+
+### With SDD
+
+```
+Requirements change...
+→ Update the specification
+→ Re-run /speckit.clarify
+→ Re-run /speckit.plan
+→ Re-run /speckit.tasks
+→ AI regenerates from updated spec
+→ Tests validate the change
+```
+
+<div class="text-regent-secondary text-sm mt-2">
+Update the spec, not patch the code.
+</div>
+
+</div>
+
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="mt-3 p-3 rounded bg-regent-master border-l-4 border-regent-cyan text-sm">
+
+**This is the killer feature.** Because the spec is the source of truth, requirement changes propagate cleanly. The constitution ensures the change doesn't violate your project's principles. The tests ensure the change actually works.
+
+</div>
+
+</v-click>
+
+</div>
+
+<!--
+Requirements WILL change. That's not a question. The question is: how painful is it when they do? Without SDD, you're patching code and hoping. With SDD, you update the spec and the changes propagate through the entire chain - new plan, new tasks, new code, new tests. The constitution catches any violations. The tests validate the change. It's not that SDD prevents change — it EMBRACES it by making change cheap and safe.
+-->
+
+---
+
+# Where SDD Transforms Work
+
+<div class="mt-3 grid grid-cols-2 gap-4 text-sm">
+
+<v-click>
+
+<div class="p-3 rounded bg-regent-master">
+
+### Debugging
+<div class="text-regent-secondary mt-1">
+
+**Before:** Read 500 lines of AI code trying to understand what it was supposed to do.
+**After:** Read the spec, find the mismatch, fix the spec, regenerate.
+
+</div>
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="p-3 rounded bg-regent-master">
+
+### Refactoring
+<div class="text-regent-secondary mt-1">
+
+**Before:** Manually restructure code, hope tests still pass, fear regressions.
+**After:** Restructure the spec. Constitution enforces patterns. Regenerate with confidence.
+
+</div>
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="p-3 rounded bg-regent-master">
+
+### Client Handoffs
+<div class="text-regent-secondary mt-1">
+
+**Before:** "Here's the code, good luck." Client's AI generates contradicting patterns immediately.
+**After:** Hand off specs + constitution. Client's AI follows the same rules. Consistency survives the handoff.
+
+</div>
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="p-3 rounded bg-regent-master">
 
 ### Legacy Modernization
+<div class="text-regent-secondary mt-1">
 
-<div class="text-4xl mt-4 mb-4">🔄</div>
+**Before:** Reverse-engineer intent from undocumented code. Hope the rewrite matches behavior.
+**After:** Spec the desired state. Plan the migration path. Constitution prevents old anti-patterns from returning.
 
-Spec the **desired state**,
-plan the migration path
-
-Analyze existing → Spec target → Plan migration
-
-<div class="mt-4 text-regent-secondary text-sm">
-Best for: refactoring, tech debt
 </div>
-
 </div>
 
 </v-click>
@@ -804,58 +1081,50 @@ Best for: refactoring, tech debt
 </div>
 
 <!--
-Spec-kit isn't just for new projects. There are three primary use cases. Greenfield is obvious - start from scratch with the full workflow. But it's equally powerful for adding features to existing codebases, where you spec the new feature within existing constraints. And for legacy modernization, you spec the DESIRED state and plan the migration from current to target. That last one is particularly powerful for tackling tech debt.
+Let's talk about where this hits hardest for us at Regent. Debugging: instead of reading 500 lines of AI-generated code, read the spec and find the mismatch. Refactoring: restructure the spec and regenerate. Client handoffs — this is huge for consulting — hand off the specs AND the constitution. The client's AI follows your rules, not just their next prompt. And legacy modernization: spec the target state, plan the migration, and the constitution prevents old anti-patterns from creeping back in.
 -->
 
 ---
 
-# The Paradigm Shift
+# The SDD Lifecycle
 
-<div class="flex flex-col items-center justify-center mt-12">
+<div class="mt-2">
 
-<v-click>
+```mermaid
+graph LR
+    A["Constitution"] --> B["Specify"]
+    B --> C["Clarify"]
+    C --> D["Plan"]
+    D --> E["Tasks"]
+    E --> F["Implement"]
+    F -.->|"Bug / Change /<br/>New feature"| B
+    F -.->|"Evolve<br/>principles"| A
 
-<div class="text-3xl font-bold text-regent-light mb-8 text-center leading-relaxed">
-  "Intent is the source of truth.<br/>
-  Code is a generated artifact."
-</div>
-
-</v-click>
-
-<v-click>
-
-<div class="grid grid-cols-3 gap-8 mt-4 text-center">
-
-<div>
-<div class="text-regent-bright text-lg font-bold">Debugging</div>
-<div class="text-regent-secondary mt-2">Fix the spec,<br/>regenerate the code</div>
-</div>
-
-<div>
-<div class="text-regent-bright text-lg font-bold">Refactoring</div>
-<div class="text-regent-secondary mt-2">Restructure the spec,<br/>regenerate the code</div>
-</div>
-
-<div>
-<div class="text-regent-bright text-lg font-bold">New Features</div>
-<div class="text-regent-secondary mt-2">Extend the spec,<br/>regenerate the code</div>
-</div>
+    style A fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
+    style B fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
+    style C fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
+    style D fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
+    style E fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
+    style F fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
+```
 
 </div>
 
-</v-click>
+<div class="mt-2 text-center text-regent-secondary text-sm">
+
+SDD is a <strong>continuous cycle</strong>, not a one-time process. Every change feeds back into specifications.
 
 </div>
 
 <!--
-This is the key takeaway. SDD represents a genuine paradigm shift. The specification - your INTENT - becomes the source of truth. Code becomes a generated, disposable artifact. Debugging? Fix the spec. Refactoring? Restructure the spec. New feature? Extend the spec. The AI regenerates the code. This is where software development is heading.
+This is the full lifecycle. Notice it's a cycle, not a pipeline. Requirements change? Go back to Specify. Bug found? Go back to Specify. New feature? Go back to Specify. Even the constitution evolves — as your project matures, you add or refine articles. This is the visual proof that SDD is the opposite of waterfall. It's designed to be iterative, continuous, and responsive to change.
 -->
 
 ---
 
 # Getting Started
 
-<div class="mt-6">
+<div class="mt-4">
 
 <v-click>
 
@@ -868,7 +1137,7 @@ uvx --from spec-kit speckit init
 
 <v-click>
 
-<div class="mt-6 grid grid-cols-2 gap-6">
+<div class="mt-4 grid grid-cols-2 gap-6">
 <div class="p-4 rounded bg-regent-master">
 
 ### First steps
@@ -895,9 +1164,9 @@ uvx --from spec-kit speckit init
 
 <v-click>
 
-<div class="mt-6 text-center text-regent-secondary">
+<div class="mt-4 text-center text-regent-secondary">
 
-Try it on your next feature. Start small - even one spec is better than zero.
+Start small: pick **one feature** and try the full workflow. You'll feel the difference immediately.
 
 </div>
 
@@ -906,7 +1175,37 @@ Try it on your next feature. Start small - even one spec is better than zero.
 </div>
 
 <!--
-Getting started is simple. One command initializes spec-kit in your project. Then follow the six steps. My advice: start small. Pick ONE feature you're about to build and try spec-kit on it. You'll immediately feel the difference - clearer requirements, more consistent output, traceable decisions. The repo has a full quick-start guide and example project to follow along.
+Getting started is simple. One command initializes spec-kit in your project. Then follow the six steps. My advice: start small. Pick ONE feature you're about to build and try spec-kit on it. You'll immediately feel the difference - clearer requirements, more consistent output, traceable decisions. The repo has a full quick-start guide and example project.
+-->
+
+---
+layout: center
+---
+
+# One Thing to Try This Week
+
+<div class="flex flex-col items-center mt-12">
+
+<div class="text-2xl text-regent-light leading-relaxed text-center max-w-xl">
+Before your next feature, spend <strong class="text-regent-bright">10 minutes</strong> writing a spec.
+</div>
+
+<div class="mt-8 text-xl text-regent-secondary text-center">
+Just the <strong>What</strong> and <strong>Why</strong>. No How.
+</div>
+
+<v-click>
+
+<div class="mt-8 text-regent-secondary text-sm opacity-70">
+That's it. See what changes.
+</div>
+
+</v-click>
+
+</div>
+
+<!--
+I'm not asking you to adopt a whole new methodology overnight. I'm asking for 10 minutes. Before your next feature, write down what it should do and why. Not how - just what and why. See how it changes the conversation with the AI. See how it changes the output. If it makes a difference - and I believe it will - then try the full workflow next time.
 -->
 
 ---
