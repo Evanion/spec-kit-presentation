@@ -129,12 +129,12 @@ html, body {
   color: var(--regent-light-cyan);
 }
 
-/* Presenter notes: override dark theme for readable text */
+/* Presenter notes: light text on dark background */
 .slidev-presenter .slidev-note,
 .slidev-presenter .slidev-note p,
 .slidev-presenter .slidev-note div,
 .slidev-presenter .grid-section.note {
-  color: #222 !important;
+  color: #F8F8F8 !important;
 }
 
 /* Tables */
