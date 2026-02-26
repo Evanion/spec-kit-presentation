@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+*.zip
+.agents/
+.claude/
+Screenshot*.jpg
+skills-lock.json
