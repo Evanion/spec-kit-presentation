@@ -129,6 +129,14 @@ html, body {
   color: var(--regent-light-cyan);
 }
 
+/* Presenter notes: override dark theme for readable text */
+.slidev-presenter .slidev-note,
+.slidev-presenter .slidev-note p,
+.slidev-presenter .slidev-note div,
+.slidev-presenter .grid-section.note {
+  color: #222 !important;
+}
+
 /* Tables */
 .slidev-layout table {
   width: 100%;
