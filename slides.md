@@ -24,7 +24,10 @@ lineNumbers: true
 </p>
 
 <!--
-Welcome everyone. Raise your hand if you use CLAUDE.md, .cursorrules, or some kind of rules file when working with AI. Great. And plan mode? Tickets? Good. You're already ahead of most teams. But today I want to talk about why those tools, as useful as they are, still leave a gap — and how we can close it.
+- Ask: "Who uses CLAUDE.md / .cursorrules / rules files?" → hands up
+- Ask: "Plan mode? Tickets?"
+- You're ahead of most teams
+- But these tools still leave a gap — today we close it
 -->
 
 ---
@@ -85,7 +88,12 @@ Rules tell the AI **how**. Tickets tell the AI **what** to work on. You can even
 </div>
 
 <!--
-Let's start with where we are. Most of us already use rules files — CLAUDE.md, .cursorrules. That's good. Some of us use plan mode. Even better. We have Jira tickets. All useful tools. And yes, you can put quality rules in your CLAUDE.md — "always write tests first", "never skip error handling." But here's the thing: the AI TRIES to follow those rules. It doesn't always succeed. There's no structural checkpoint that says "stop, you skipped the tests." Plan mode helps you think, but those plans vanish when the session ends. The gap isn't that these tools are bad — they're great. The gap is that nothing ENFORCES compliance and traces intent through to code.
+- Rules files, plan mode, tickets — all useful, all good
+- You CAN put quality rules in CLAUDE.md ("always write tests first")
+- Problem: AI TRIES to follow them, but doesn't always succeed
+- No structural checkpoint that says "stop, you skipped the tests"
+- Plan mode helps thinking, but plans vanish when session ends
+- The gap: nothing ENFORCES compliance or traces intent → code
 -->
 
 ---
@@ -135,7 +143,13 @@ Also add rate limiting. And tests."
 </div>
 
 <!--
-This happens even if you have CLAUDE.md rules and plan mode. Watch: first prompt is vague, so the AI fills in the blanks. Your rules file tells it to use TypeScript and your preferred patterns — great. But it still chooses JWT when you wanted sessions, because rules don't capture INTENT. You correct it, but now it rewrites from scratch. Plan mode helped you think it through, but that plan is gone — the AI is guessing again. Each iteration diverges further. This isn't an AI problem or a tooling problem. It's a specification problem.
+- This happens even WITH rules + plan mode
+- Vague prompt → AI fills in the blanks
+- Rules govern style, not INTENT (picks JWT when you wanted sessions)
+- You correct → AI rewrites from scratch, new patterns
+- Plan mode helped once, but that plan is gone next session
+- Each iteration diverges further
+- Key insight: this is a specification problem, not an AI problem
 -->
 
 ---
@@ -195,7 +209,11 @@ When requirements change (and they will), vibe-coded systems resist modification
 </div>
 
 <!--
-Why does this matter NOW, when we already have rules and plan mode? Three trends are converging. First, AI is powerful enough to generate complex systems — which means rules files alone can't prevent it from generating the WRONG complex system. Second, wrong assumptions compound. Plan mode helps once, but it doesn't persist or enforce. By your fifth session, you're debugging foundations nobody validated. Third: codebases that can't be reasoned about can't be adapted. When the client changes requirements — and they always do — you need more than rules. You need structured, enforceable specifications.
+- Why now, when we already have rules + plan mode?
+- **Capability:** AI generates complex systems → rules alone can't prevent the WRONG complex system
+- **Compounding:** Wrong assumptions stack up; plan mode helps once but doesn't persist
+- **Adaptability:** Codebases nobody can reason about can't be adapted when requirements change
+- You need more than rules — you need structured, enforceable specifications
 -->
 
 ---
@@ -251,7 +269,13 @@ Why does this matter NOW, when we already have rules and plan mode? Three trends
 </div>
 
 <!--
-This is the layer that sits above rules files and tickets. Rules tell the AI how to write code. Tickets tell it what to work on. But SDD flips the relationship entirely: the SPECIFICATION — your intent — becomes the primary artifact. Code is generated FROM specs. When something's wrong, you fix the spec, not the code. Your CLAUDE.md still governs style. Your tickets still track work. But the spec governs WHAT gets built and WHY. That's the missing layer.
+- This sits ABOVE rules files and tickets
+- Rules = how to write code; Tickets = what to work on
+- SDD flips it: the SPECIFICATION is the primary artifact
+- Code is generated FROM specs
+- Something wrong? Fix the spec, not the code
+- CLAUDE.md still governs style, tickets still track work
+- Spec governs WHAT gets built and WHY — that's the missing layer
 -->
 
 ---
@@ -296,7 +320,12 @@ This is the layer that sits above rules files and tickets. Rules tell the AI how
 </div>
 
 <!--
-So how do you actually DO specification-driven development? This is where spec-kit comes in. It's GitHub's open source toolkit that provides the structure, commands, and quality gates. Think of it as the missing layer between your rules file and your tickets. It works with any AI tool — Copilot, Claude Code, Gemini CLI. Six commands, each mapping to a phase. Let me walk you through them.
+- How do you actually DO this? → spec-kit
+- GitHub's open source toolkit: structure, commands, quality gates
+- The missing layer between rules files and tickets
+- Works with any AI tool: Copilot, Claude Code, Gemini CLI
+- Six commands, each mapping to a workflow phase
+- Let me walk through them
 -->
 
 ---
@@ -371,7 +400,13 @@ Structured specification workflow
 </div>
 
 <!--
-Let's go deeper on the gap. "Can't I just put quality gates in CLAUDE.md?" You can — and you should. But CLAUDE.md enforcement is best-effort. The AI TRIES to follow your rules, but nothing structurally blocks it from proceeding if it doesn't. In a long session, rules get deprioritized. There's no checkpoint that says "stop — you violated Article 2." Plan mode helps you think, but those plans vanish when the session ends. Spec-kit adds the missing structural layer: explicit compliance checks at every workflow step. It doesn't replace your rules file — it enforces the things your rules file can only ask for.
+- "Can't I just put quality gates in CLAUDE.md?" → Yes, and you should
+- But CLAUDE.md enforcement is best-effort
+- Nothing structurally BLOCKS the AI from proceeding if it skips a rule
+- Long sessions → rules get deprioritized
+- No checkpoint saying "stop — you violated Article 2"
+- Spec-kit adds explicit compliance checks at every workflow step
+- Doesn't replace rules files — enforces what rules can only ask for
 -->
 
 ---
@@ -411,7 +446,12 @@ The feedback loop goes back to **specifications**, not to code.
 </v-click>
 
 <!--
-Here's the full workflow. Six steps, each building on the last. This is what plan mode WOULD be if plans persisted, had quality gates, and enforced constitutional compliance. Pay attention to that feedback arrow — it goes from implementation back to SPECIFY, not back to code. That arrow is what makes this the opposite of waterfall. In waterfall, you can't go back. In SDD, going back is the whole point — you iterate on specs, not on code.
+- Six steps, each building on the last
+- This is what plan mode WOULD be if plans persisted + had quality gates
+- Key: the feedback arrow goes back to SPECIFY, not to code
+- That arrow = the opposite of waterfall
+- Waterfall: can't go back; SDD: going back is the whole point
+- You iterate on specs, not on code
 -->
 
 ---
@@ -479,7 +519,11 @@ exceptions. Fail gracefully, log clearly.
 </div>
 
 <!--
-The constitution is like CLAUDE.md's big sibling. Your rules file ASKS the AI to follow conventions. The constitution BLOCKS progress until compliance is achieved. Articles marked NON-NEGOTIABLE are hard quality gates — the AI cannot proceed if a spec violates them. This is the difference between "please follow these guidelines" and "the system enforces these rules." Your CLAUDE.md says "write tests." The constitution says "no tests, no progress."
+- Constitution = CLAUDE.md's big sibling
+- Rules file ASKS; constitution BLOCKS until compliance achieved
+- NON-NEGOTIABLE = hard quality gates — AI cannot proceed
+- Difference: "please follow guidelines" vs "system enforces rules"
+- CLAUDE.md says "write tests" → constitution says "no tests, no progress"
 -->
 
 ---
@@ -545,7 +589,13 @@ The constitution is like CLAUDE.md's big sibling. Your rules file ASKS the AI to
 </div>
 
 <!--
-Here's the middle three steps in action. Watch the progression. SPECIFY captures pure intent — what and why, never how. CLARIFY forces you to confront every ambiguity BEFORE code. Those NEEDS CLARIFICATION markers are quality gates — no planning until they're resolved. Only in PLAN do we bring in technology. Notice the constitutional compliance check at the bottom — every plan is validated against the constitution. This whole process takes about 15 minutes. Compare that to 3 hours of prompt-and-pray.
+- Watch the progression through three steps
+- **Specify:** pure intent — what and why, never how
+- **Clarify:** confront every ambiguity BEFORE code
+- NEEDS CLARIFICATION markers = quality gates — no planning until resolved
+- **Plan:** only NOW do we bring in technology
+- Constitutional compliance check at bottom — every plan validated
+- ~15 minutes total vs 3 hours of prompt-and-pray
 -->
 
 ---
@@ -610,7 +660,11 @@ Here's the middle three steps in action. Watch the progression. SPECIFY captures
 </div>
 
 <!--
-Tasks are auto-generated from the plan, each with its own Git branch, dependency graph, and test requirements. Independent tasks can run in parallel — two AI agents on separate branches, no conflicts. Each task maps back to the spec, which maps back to the constitution. This traceability is what makes the code reviewable. When you review a PR, you can see WHY the code exists, not just WHAT it does.
+- Tasks auto-generated from plan: own branch, dependencies, test requirements
+- Independent tasks run in parallel — two AI agents, no conflicts
+- Each task traces back: task → spec → constitution
+- This traceability makes code reviewable
+- PR review: you see WHY the code exists, not just WHAT it does
 -->
 
 ---
@@ -688,7 +742,12 @@ Acceptance Criteria → Tests FIRST → Implementation. Every line traceable to 
 </div>
 
 <!--
-Here's the magic. Acceptance criteria from the spec become tests — FIRST, because the constitution demands it. Tests define the contract. Only then does the implementation get generated. Every method, every branch, every error case traces back to a stated acceptance criterion which traces back to the original spec. When a test fails, you know EXACTLY which spec requirement is broken. This is the chain: intent → spec → test → code.
+- Acceptance criteria → tests FIRST (constitution demands it)
+- Tests define the contract
+- Only THEN does implementation get generated
+- Every method, every error case traces to an acceptance criterion
+- Test fails? You know EXACTLY which spec requirement is broken
+- The chain: intent → spec → test → code
 -->
 
 ---
@@ -751,7 +810,12 @@ Changing a spec in waterfall meant **rewriting the project plan**.
 </v-click>
 
 <!--
-This is the number one objection, so let's address it head-on. Waterfall and SDD both start with specifications, but that's where the similarity ends. Waterfall specs are frozen — changing them is expensive and political. SDD specs are living documents — changing them is literally the workflow. The feedback arrow on the workflow diagram? That's the opposite of waterfall. Waterfall says "don't go back." SDD says "going back is cheap, so do it early and often."
+- #1 objection — address it head-on
+- Both start with specs, but that's where similarity ends
+- Waterfall specs: frozen, change is expensive and political
+- SDD specs: living documents, change IS the workflow
+- The feedback arrow = the opposite of waterfall
+- Waterfall: "don't go back" → SDD: "going back is cheap, do it often"
 -->
 
 ---
@@ -815,7 +879,11 @@ Remember the decay spiral? 15 minutes of specification prevents that entire cycl
 </div>
 
 <!--
-"But writing specs takes time!" Yes, about 15 minutes. Compare that to the decay spiral we saw earlier - 3 hours of prompt, fix, re-prompt, hope. The spec pays for itself on the first feature. And it compounds: the second feature is faster because the constitution already exists. The third feature is faster because patterns are established. Vibe coding has constant cost. SDD has decreasing cost over time.
+- "Writing specs takes time!" → Yes, ~15 minutes
+- Compare: 3 hours of prompt → fix → re-prompt → hope
+- Spec pays for itself on the FIRST feature
+- Compounds: 2nd feature faster (constitution exists), 3rd faster (patterns established)
+- Vibe coding = constant cost; SDD = decreasing cost over time
 -->
 
 ---
@@ -876,7 +944,11 @@ The better the AI gets, the more valuable structured specifications become.
 </div>
 
 <!--
-"AI is getting so good, I don't need all this structure." Here's the thing: the better AI gets at generating code, the MORE important it is to give it the right instructions. Remember the three converging trends? A powerful tool with vague instructions generates wrong things at scale. SDD doesn't slow the AI down — it channels its power. Think of it this way: a race car without a steering wheel is just a very fast way to crash.
+- "AI is so good I don't need structure"
+- The better AI gets → the MORE important good instructions are
+- Powerful tool + vague instructions = wrong things at scale
+- SDD doesn't slow AI down — it channels its power
+- Analogy: race car without steering wheel = very fast way to crash
 -->
 
 ---
@@ -942,7 +1014,13 @@ Update the spec, not patch the code.
 </div>
 
 <!--
-Requirements WILL change. That's not a question. The question is: how painful is it when they do? Without SDD, you're patching code and hoping. With SDD, you update the spec and the changes propagate through the entire chain - new plan, new tasks, new code, new tests. The constitution catches any violations. The tests validate the change. It's not that SDD prevents change — it EMBRACES it by making change cheap and safe.
+- Requirements WILL change — that's not a question
+- The question: how painful is it when they do?
+- Without SDD: patching code and hoping
+- With SDD: update spec → changes propagate through entire chain
+- New plan → new tasks → new code → new tests
+- Constitution catches violations, tests validate the change
+- SDD doesn't prevent change — it makes change cheap and safe
 -->
 
 ---
@@ -1010,7 +1088,11 @@ Requirements WILL change. That's not a question. The question is: how painful is
 </div>
 
 <!--
-Let's talk about where this hits hardest for us at Regent. Debugging: instead of reading 500 lines of AI-generated code, read the spec and find the mismatch. Refactoring: restructure the spec and regenerate. Client handoffs — this is huge for consulting — hand off the specs AND the constitution. The client's AI follows your rules, not just their next prompt. And legacy modernization: spec the target state, plan the migration, and the constitution prevents old anti-patterns from creeping back in.
+- Where this hits hardest for Regent:
+- **Debugging:** read the spec, find the mismatch — not 500 lines of AI code
+- **Refactoring:** restructure spec and regenerate
+- **Client handoffs:** hand off specs + constitution → client's AI follows YOUR rules
+- **Legacy modernization:** spec the target state, constitution prevents old anti-patterns
 -->
 
 ---
@@ -1046,7 +1128,12 @@ SDD is a <strong>continuous cycle</strong>, not a one-time process. Every change
 </div>
 
 <!--
-This is the full lifecycle. Notice it's a cycle, not a pipeline. Requirements change? Go back to Specify. Bug found? Go back to Specify. New feature? Go back to Specify. Even the constitution evolves — as your project matures, you add or refine articles. This is the visual proof that SDD is the opposite of waterfall. It's designed to be iterative, continuous, and responsive to change.
+- Full lifecycle — a cycle, not a pipeline
+- Requirements change → back to Specify
+- Bug found → back to Specify
+- New feature → back to Specify
+- Even the constitution evolves as the project matures
+- Visual proof: SDD is the opposite of waterfall
 -->
 
 ---
@@ -1104,7 +1191,11 @@ Start small: pick **one feature** and try the full workflow. You'll feel the dif
 </div>
 
 <!--
-Getting started is simple. One command initializes spec-kit in your project. Then follow the six steps. My advice: start small. Pick ONE feature you're about to build and try spec-kit on it. You'll immediately feel the difference - clearer requirements, more consistent output, traceable decisions. The repo has a full quick-start guide and example project.
+- One command to initialize
+- Follow the six steps
+- Advice: start small — pick ONE feature and try the full workflow
+- You'll feel the difference immediately: clearer requirements, consistent output
+- Full quick-start guide and examples in the repo
 -->
 
 ---
@@ -1134,7 +1225,11 @@ That's it. See what changes.
 </div>
 
 <!--
-I'm not asking you to adopt a whole new methodology overnight. I'm asking for 10 minutes. Before your next feature, write down what it should do and why. Not how - just what and why. See how it changes the conversation with the AI. See how it changes the output. If it makes a difference - and I believe it will - then try the full workflow next time.
+- Not asking for a whole new methodology overnight
+- Just 10 minutes before your next feature
+- Write down WHAT it should do and WHY — not how
+- See how it changes the AI conversation and output
+- If it works → try the full workflow next time
 -->
 
 ---
@@ -1155,5 +1250,7 @@ layout: center
 </div>
 
 <!--
-Thank you! I'm happy to take questions. If you want to try spec-kit, the GitHub repo has everything you need. I'm also happy to pair with anyone who wants to try it on a real feature. Let's move from vibe coding to spec-driven development.
+- Happy to take questions
+- GitHub repo has everything you need to get started
+- Happy to pair with anyone who wants to try it on a real feature
 -->
