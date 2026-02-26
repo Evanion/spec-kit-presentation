@@ -36,7 +36,7 @@ Welcome everyone. Raise your hand if you use CLAUDE.md, .cursorrules, or some ki
 <v-click>
 
 <div class="grid grid-cols-3 gap-4">
-<div class="p-4 rounded bg-regent-master border-t-3 border-green-500">
+<div class="p-4 rounded bg-regent-master">
 
 ### Rules files
 <div class="text-regent-secondary text-sm mt-1">
@@ -46,7 +46,7 @@ CLAUDE.md, .cursorrules — tells AI **how** to code. Formatting, patterns, conv
 </div>
 </div>
 
-<div class="p-4 rounded bg-regent-master border-t-3 border-green-500">
+<div class="p-4 rounded bg-regent-master">
 
 ### Plan mode
 <div class="text-regent-secondary text-sm mt-1">
@@ -56,7 +56,7 @@ Think before coding. Better than raw prompting. But plans are **ephemeral** — 
 </div>
 </div>
 
-<div class="p-4 rounded bg-regent-master border-t-3 border-green-500">
+<div class="p-4 rounded bg-regent-master">
 
 ### Tickets
 <div class="text-regent-secondary text-sm mt-1">
@@ -72,7 +72,7 @@ Jira, GH Issues — tracks **work items**. But the AI interprets each ticket dif
 
 <v-click>
 
-<div class="mt-4 p-4 rounded bg-regent-master border-l-4 border-red-500">
+<div class="mt-4 p-4 rounded bg-regent-master border-l-4 border-regent-cyan">
 
 ### The gap
 
@@ -146,7 +146,7 @@ This happens even if you have CLAUDE.md rules and plan mode. Watch: first prompt
 
 <v-click>
 
-<div class="p-4 rounded bg-regent-master border-t-3 border-regent-cyan">
+<div class="p-4 rounded bg-regent-master">
 
 ### AI Capability Threshold
 
@@ -162,7 +162,7 @@ A bad assumption at line 1 becomes 500 lines of confidently wrong code. The bett
 
 <v-click>
 
-<div class="p-4 rounded bg-regent-master border-t-3 border-regent-cyan">
+<div class="p-4 rounded bg-regent-master">
 
 ### Exponential Complexity
 
@@ -178,7 +178,7 @@ One vague prompt creates an architecture. The next prompt builds on that archite
 
 <v-click>
 
-<div class="p-4 rounded bg-regent-master border-t-3 border-regent-cyan">
+<div class="p-4 rounded bg-regent-master">
 
 ### Acceleration of Change
 
@@ -339,7 +339,7 @@ Jira, GH Issues, plan mode...
 </div>
 </div>
 
-<div class="p-3 rounded bg-regent-master border border-[#0099CC]">
+<div class="p-3 rounded bg-regent-master border-l-4 border-regent-cyan">
 
 ### Spec-kit
 <div class="text-regent-secondary mt-1">
@@ -426,16 +426,16 @@ Here's the full workflow. Six steps, each building on the last. This is what pla
 
 <div class="mt-2 grid grid-cols-2 gap-3 text-sm">
 
-<div class="p-3 rounded bg-regent-master">
+<div>
 
 ```markdown
 ## Article 1: Library-First [NON-NEGOTIABLE]
-All features as standalone, reusable libraries
-with clean public APIs.
+All features as standalone, reusable
+libraries with clean public APIs.
 
-## Article 2: Test-First Imperative [NON-NEGOTIABLE]
-Tests BEFORE implementation. No exceptions.
-No "we'll add tests later."
+## Article 2: Test-First [NON-NEGOTIABLE]
+Tests BEFORE implementation.
+No exceptions. No "we'll add tests later."
 
 ## Article 3: Simplicity
 Simplest solution that meets requirements.
@@ -444,7 +444,7 @@ Avoid premature abstraction.
 
 </div>
 
-<div class="p-3 rounded bg-regent-master">
+<div>
 
 ```markdown
 ## Article 4: Single Responsibility
@@ -452,7 +452,7 @@ Each module does one thing well.
 Clear boundaries, explicit contracts.
 
 ## Article 5: Documentation as Code
-Every public API is documented inline.
+Every public API documented inline.
 If it's not documented, it doesn't exist.
 
 ## Article 6: Error Boundaries [NON-NEGOTIABLE]
@@ -486,97 +486,66 @@ The constitution is like CLAUDE.md's big sibling. Your rules file ASKS the AI to
 
 # From Intent to Architecture
 
-<div class="mt-2 grid grid-cols-3 gap-3 text-sm">
+<div class="mt-2">
 
-<v-click>
-
-<div class="p-3 rounded bg-regent-master border-t-3 border-[#0099CC]">
-
-### Specify
-<div class="text-regent-secondary text-xs mb-2">What & Why — never How</div>
-
+````md magic-move
 ```markdown
-# Feature: User Auth
+# Step 1: Specify — What & Why, never How
 
-## What
-Sign in with email/password or SSO.
-Sessions persist across restarts.
-Rate-limited after 5 failed attempts.
+## Feature: User Authentication
 
-## Why
-- Security: protect accounts
+### What
+- Sign in with email/password or SSO
+- Sessions persist across restarts
+- Rate-limited after 5 failed attempts
+
+### Why
+- Security: protect user accounts
 - UX: reduce return-user friction
 - Compliance: SOC2 requirements
 ```
-
-</div>
-
-</v-click>
-
-<v-click>
-
-<div class="p-3 rounded bg-regent-master border-t-3 border-[#3FCDFA]">
-
-### Clarify
-<div class="text-regent-secondary text-xs mb-2">Surface every ambiguity</div>
-
 ```markdown
-# Clarification Report
+# Step 2: Clarify — Surface every ambiguity
 
-## Resolved
+## Clarification Report
+
+### Resolved
 - SSO: Azure AD only (IT policy)
 
-## [NEEDS CLARIFICATION]
+### [NEEDS CLARIFICATION]
 - Password rules?
   → Rec: NIST 800-63B
 - Rate limit: per IP or account?
-  → Rec: per account, 15min
+  → Rec: per account, 15min lockout
 - Locked accounts notify admins?
-  → Rec: Yes, existing alerts
+  → Rec: Yes, use existing alert system
 ```
-
-</div>
-
-</v-click>
-
-<v-click>
-
-<div class="p-3 rounded bg-regent-master border-t-3 border-[#00ACE6]">
-
-### Plan
-<div class="text-regent-secondary text-xs mb-2">NOW we talk technology</div>
-
 ```markdown
-# Technical Plan
+# Step 3: Plan — NOW we talk technology
 
-## Architecture
-- Session-based (Redis store)
-- Express middleware
-- Azure AD SDK for SSO
+## Technical Plan
 
-## Constitutional Compliance
-✅ Art 1: Standalone libraries
-✅ Art 2: Test-first
-✅ Art 3: Simplest approach
-✅ Art 6: Error boundaries
+### Architecture
+- Session-based auth (Redis store)
+- Express middleware pipeline
+- Azure AD SDK for SSO integration
+
+### Constitutional Compliance
+✅ Article 1: Standalone libraries
+✅ Article 2: Test-first development
+✅ Article 3: Simplest approach
+✅ Article 6: Error boundaries
 ```
+````
 
 </div>
-
-</v-click>
-
-</div>
-
-<v-click>
 
 <div class="mt-2 text-center text-regent-secondary text-sm italic">
 15 minutes of specification prevents 3 hours of rework.
 </div>
 
-</v-click>
-
 <!--
-Here's the middle three steps in action. SPECIFY captures pure intent — what and why, never how. CLARIFY forces you to confront every ambiguity BEFORE code. Those NEEDS CLARIFICATION markers are quality gates — no planning until they're resolved. Only in PLAN do we bring in technology. Notice the constitutional compliance check at the bottom — every plan is validated against the constitution. This whole process takes about 15 minutes. Compare that to 3 hours of prompt-and-pray.
+Here's the middle three steps in action. Watch the progression. SPECIFY captures pure intent — what and why, never how. CLARIFY forces you to confront every ambiguity BEFORE code. Those NEEDS CLARIFICATION markers are quality gates — no planning until they're resolved. Only in PLAN do we bring in technology. Notice the constitutional compliance check at the bottom — every plan is validated against the constitution. This whole process takes about 15 minutes. Compare that to 3 hours of prompt-and-pray.
 -->
 
 ---
@@ -588,8 +557,6 @@ Here's the middle three steps in action. SPECIFY captures pure intent — what a
 <div>
 
 <v-click>
-
-<div class="p-3 rounded bg-regent-master text-sm">
 
 ```markdown
 # Tasks (from plan)
@@ -616,8 +583,6 @@ Here's the middle three steps in action. SPECIFY captures pure intent — what a
 - Deps: Task 1, Task 2
 ```
 
-</div>
-
 </v-click>
 
 </div>
@@ -626,35 +591,15 @@ Here's the middle three steps in action. SPECIFY captures pure intent — what a
 
 <v-click>
 
-<div class="space-y-2">
+<div class="space-y-3 mt-1">
 
-<div class="p-2 rounded bg-regent-master border-l-4 border-[#0099CC] text-sm">
-<strong>Dependency-aware:</strong> Task 1 runs first as foundation
-</div>
+- **Dependency-aware** — Task 1 runs first as foundation
 
-<div class="p-2 rounded bg-regent-master border-l-4 border-[#3FCDFA] text-sm">
-<strong>Parallel execution:</strong> Tasks 2 & 3 run simultaneously — two AI agents, separate branches
-</div>
+- **Parallel execution** — Tasks 2 & 3 run simultaneously, two AI agents on separate branches
 
-<div class="p-2 rounded bg-regent-master border-l-4 border-[#00ACE6] text-sm">
-<strong>Isolated & reviewable:</strong> Each task on its own branch with its own tests
-</div>
+- **Isolated & reviewable** — each task on its own branch with its own tests
 
-<div class="mt-3 p-3 rounded bg-regent-master text-sm">
-
-### Every task is traceable
-
-```
-Acceptance Criteria
-  ↓ traces to
-Specification (What & Why)
-  ↓ validated by
-Constitution (Articles)
-  ↓ implemented as
-Tests → Code
-```
-
-</div>
+- **Fully traceable** — every task maps back through spec → constitution → tests → code
 
 </div>
 
@@ -774,7 +719,7 @@ Designed for a world where changing direction was expensive.
 
 <v-click>
 
-<div class="p-4 rounded bg-regent-master border border-[#0099CC]">
+<div class="p-4 rounded bg-regent-master border-l-4 border-regent-cyan">
 
 ### Specification-Driven Development
 
@@ -841,7 +786,7 @@ Prompt → fix → re-prompt → fix<br/>
 
 </div>
 
-<div class="p-4 rounded bg-regent-master text-center border border-[#0099CC]">
+<div class="p-4 rounded bg-regent-master text-center border-l-4 border-regent-cyan">
 
 ### Spec-Driven
 
@@ -948,37 +893,33 @@ The better the AI gets, the more valuable structured specifications become.
 
 ### Without SDD
 
-```
-Requirements change...
-→ Find all affected code (where IS it?)
-→ Manually update each file
-→ Hope nothing else breaks
-→ Re-test everything manually
-→ Pray the AI doesn't contradict
-  its earlier output
-```
+- Requirements change...
+- Prompt the AI to update the feature
+- AI loses context from the original implementation
+- New output contradicts previous patterns
+- Prompt again to fix the conflicts
+- Repeat until it "looks right"
+- No way to verify nothing else broke
 
-<div class="text-regent-secondary text-sm mt-2">
-Patch the code and hope.
+<div class="text-regent-secondary text-sm mt-2 italic">
+Re-prompt and hope.
 </div>
 
 </div>
 
-<div class="p-4 rounded bg-regent-master border border-[#0099CC]">
+<div class="p-4 rounded bg-regent-master border-l-4 border-regent-cyan">
 
 ### With SDD
 
-```
-Requirements change...
-→ Update the specification
-→ Re-run /speckit.clarify
-→ Re-run /speckit.plan
-→ Re-run /speckit.tasks
-→ AI regenerates from updated spec
-→ Tests validate the change
-```
+- Requirements change...
+- Update the specification
+- Re-run `/speckit.clarify`
+- Re-run `/speckit.plan`
+- Re-run `/speckit.tasks`
+- AI regenerates from updated spec
+- Tests validate the change
 
-<div class="text-regent-secondary text-sm mt-2">
+<div class="text-regent-secondary text-sm mt-2 italic">
 Update the spec, not patch the code.
 </div>
 
@@ -1015,12 +956,11 @@ Requirements WILL change. That's not a question. The question is: how painful is
 <div class="p-3 rounded bg-regent-master">
 
 ### Debugging
-<div class="text-regent-secondary mt-1">
+<div class="text-regent-secondary text-xs mt-1">Bug found in AI-generated code</div>
 
-**Before:** Read 500 lines of AI code trying to understand what it was supposed to do.
-**After:** Read the spec, find the mismatch, fix the spec, regenerate.
+<div class="mt-2"><span class="text-red-400 font-bold">Before:</span> Which prompt produced this? What was the intent? Re-prompt to fix, hope it doesn't break something else.</div>
+<div class="mt-2"><span class="text-regent-bright font-bold">After:</span> Trace the bug to a spec requirement. Fix the spec. Regenerate. Tests confirm the fix.</div>
 
-</div>
 </div>
 
 </v-click>
@@ -1030,12 +970,11 @@ Requirements WILL change. That's not a question. The question is: how painful is
 <div class="p-3 rounded bg-regent-master">
 
 ### Refactoring
-<div class="text-regent-secondary mt-1">
+<div class="text-regent-secondary text-xs mt-1">Architecture needs to change</div>
 
-**Before:** Manually restructure code, hope tests still pass, fear regressions.
-**After:** Restructure the spec. Constitution enforces patterns. Regenerate with confidence.
+<div class="mt-2"><span class="text-red-400 font-bold">Before:</span> Prompt the AI to restructure. It loses the original constraints. New architecture, new inconsistencies.</div>
+<div class="mt-2"><span class="text-regent-bright font-bold">After:</span> Update the spec. Constitution enforces constraints. Regenerate from source of truth.</div>
 
-</div>
 </div>
 
 </v-click>
@@ -1045,12 +984,11 @@ Requirements WILL change. That's not a question. The question is: how painful is
 <div class="p-3 rounded bg-regent-master">
 
 ### Client Handoffs
-<div class="text-regent-secondary mt-1">
+<div class="text-regent-secondary text-xs mt-1">Project transitions to another team</div>
 
-**Before:** "Here's the code, good luck." Client's AI generates contradicting patterns immediately.
-**After:** Hand off specs + constitution. Client's AI follows the same rules. Consistency survives the handoff.
+<div class="mt-2"><span class="text-red-400 font-bold">Before:</span> "Here's the repo." New team's AI immediately generates conflicting patterns. Knowledge walks out the door.</div>
+<div class="mt-2"><span class="text-regent-bright font-bold">After:</span> Hand off specs + constitution. New team's AI follows the same rules from day one.</div>
 
-</div>
 </div>
 
 </v-click>
@@ -1060,12 +998,11 @@ Requirements WILL change. That's not a question. The question is: how painful is
 <div class="p-3 rounded bg-regent-master">
 
 ### Legacy Modernization
-<div class="text-regent-secondary mt-1">
+<div class="text-regent-secondary text-xs mt-1">Existing codebase needs updating</div>
 
-**Before:** Reverse-engineer intent from undocumented code. Hope the rewrite matches behavior.
-**After:** Spec the desired state. Plan the migration path. Constitution prevents old anti-patterns from returning.
+<div class="mt-2"><span class="text-red-400 font-bold">Before:</span> No one remembers why it was built this way. AI guesses at intent, adds new assumptions on top of old ones.</div>
+<div class="mt-2"><span class="text-regent-bright font-bold">After:</span> Spec the desired state. AI migrates with clear intent. Constitution prevents old anti-patterns.</div>
 
-</div>
 </div>
 
 </v-click>
