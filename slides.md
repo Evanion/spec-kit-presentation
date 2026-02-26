@@ -230,6 +230,81 @@ Spec-kit is GitHub's official open source toolkit for specification-driven devel
 
 ---
 
+# "Can't I just use CLAUDE.md and Jira?"
+
+<div class="mt-2">
+
+<v-click>
+
+<div class="grid grid-cols-3 gap-4 text-sm">
+
+<div class="p-3 rounded bg-regent-master">
+
+### Rules files
+<div class="text-regent-secondary mt-1">
+
+CLAUDE.md, .cursorrules, copilot-instructions...
+
+- Tell AI **how** to code
+- Static instructions
+- No quality gates
+- No structured workflow
+
+</div>
+</div>
+
+<div class="p-3 rounded bg-regent-master">
+
+### Tickets + Plan mode
+<div class="text-regent-secondary mt-1">
+
+Jira, GH Issues, Azure Boards...
+
+- Describe **work items**
+- No constitutional enforcement
+- AI interprets differently each time
+- Context lost between sessions
+
+</div>
+</div>
+
+<div class="p-3 rounded bg-regent-master border border-[#0099CC]">
+
+### Spec-kit
+<div class="text-regent-secondary mt-1">
+
+Structured specification workflow
+
+- Defines **what** and **why**
+- Quality gates block bad specs
+- Constitutional consistency
+- Traceable: intent → code
+
+</div>
+</div>
+
+</div>
+
+</v-click>
+
+<v-click>
+
+<div class="mt-3 p-3 rounded bg-regent-master border-l-4 border-regent-cyan text-sm">
+
+**They're complementary, not competing.** Rules files set coding conventions. Tickets track work. Spec-kit sits *in between* — it's the structured bridge from intent to implementation that ensures the AI generates consistent, traceable code every time.
+
+</div>
+
+</v-click>
+
+</div>
+
+<!--
+This is the most common question I get. "I already have CLAUDE.md files and Jira tickets, why do I need another tool?" The answer is they solve different problems. Rules files like CLAUDE.md tell the AI HOW to code - formatting, patterns, conventions. Tickets describe work items - what needs to be done. But neither provides structured SPECIFICATIONS with quality gates. Spec-kit fills the gap between "here's a ticket" and "here's working code." It ensures that before any code is generated, the intent is fully specified, ambiguities are resolved, and the architecture is planned. Your CLAUDE.md still tells the AI to use TypeScript and your preferred patterns. Your tickets still track progress. But spec-kit ensures what gets built actually matches what was intended.
+-->
+
+---
+
 # The SDD Workflow
 
 <div class="mt-2">
