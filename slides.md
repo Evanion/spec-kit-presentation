@@ -11,6 +11,7 @@ fonts:
 transition: slide-left
 mdc: true
 lineNumbers: true
+layout: center
 ---
 
 # Spec-Driven Development
