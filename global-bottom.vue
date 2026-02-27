@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
+
+const slidevContext = inject('$$slidev-context') as { nav: { currentSlideNo: number } } | undefined
+
+const currentPage = computed(() => slidevContext?.nav?.currentSlideNo ?? 1)
 
 const formattedDate = computed(() => {
   return new Intl.DateTimeFormat('sv-SE', {
@@ -17,7 +21,7 @@ const formattedDate = computed(() => {
       <span class="regent-footer-date">{{ formattedDate }}</span>
     </div>
     <div class="regent-footer-center">IT som det borde vara</div>
-    <div class="regent-footer-right">Slide {{ $nav.currentPage }}</div>
+    <div class="regent-footer-right">Slide {{ currentPage }}</div>
   </div>
 </template>
 

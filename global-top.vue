@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { inject, onMounted, computed, watch } from 'vue'
 import { usePresenterAuth } from './composables/usePresenterAuth'
 import { useSession } from './composables/useSession'
 import { useSlideSync } from './composables/useSlideSync'
@@ -7,20 +7,18 @@ import ConnectionStatus from './components/ConnectionStatus.vue'
 
 const { isPresenter } = usePresenterAuth()
 const { initSession } = useSession()
-const { watchPresenterNav } = useSlideSync()
+const { syncSlide } = useSlideSync()
+
+const slidevContext = inject('$$slidev-context') as { nav: { currentSlideNo: number } } | undefined
+const currentPage = computed(() => slidevContext?.nav?.currentSlideNo ?? 1)
 
 onMounted(async () => {
   if (isPresenter.value) {
     await initSession()
-    // Watch slide navigation and broadcast changes
-    // $nav is injected by Slidev; access via useNav if available
-    try {
-      const { useNav } = await import('@slidev/client')
-      const nav = useNav()
-      watchPresenterNav(nav.currentPage)
-    } catch {
-      // Not in Slidev context (shouldn't happen in presenter view)
-    }
+    // Watch slide navigation and broadcast changes via Slidev context injection
+    watch(currentPage, (page) => {
+      syncSlide(page)
+    })
   }
 })
 </script>
