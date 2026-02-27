@@ -32,6 +32,27 @@ layout: center
 -->
 
 ---
+layout: center
+---
+
+# Scan to Join
+
+<div class="mt-6">
+  <AudienceQrCode />
+</div>
+
+<p class="text-regent-secondary text-sm mt-4 opacity-80">
+  Open on your phone to participate in live polls and Q&A
+</p>
+
+<!--
+- Ask everyone to scan the QR code
+- Opens a mobile participation page
+- You'll be able to vote on polls and ask questions
+- No login required
+-->
+
+---
 
 # Where We Are Today
 
@@ -408,6 +429,28 @@ Structured specification workflow
 - No checkpoint saying "stop — you violated Article 2"
 - Spec-kit adds explicit compliance checks at every workflow step
 - Doesn't replace rules files — enforces what rules can only ask for
+-->
+
+---
+
+# Quick Poll
+
+<div class="mt-4">
+
+<LivePoll question="What's your AI planning approach?" />
+
+<PollResults
+  :slide-number="$nav.currentPage"
+  question="What's your AI planning approach?"
+  :options="['I spec my kits', 'Plan mode, more like pain mode', 'WTF AI can plan?']"
+/>
+
+</div>
+
+<!--
+- Quick temperature check with the audience
+- Poll is live on their phones — results update in real-time
+- Transition: "Now that we know where everyone stands..."
 -->
 
 ---
@@ -1197,6 +1240,27 @@ Start small: pick **one feature** and try the full workflow. You'll feel the dif
 - Advice: start small — pick ONE feature and try the full workflow
 - You'll feel the difference immediately: clearer requirements, consistent output
 - Full quick-start guide and examples in the repo
+-->
+
+---
+
+# Your Questions
+
+<div class="mt-4">
+
+<TopQuestions />
+
+</div>
+
+<div class="mt-2 text-regent-secondary text-sm opacity-70 text-center">
+  Questions are live — upvote to prioritize!
+</div>
+
+<!--
+- Open the floor to audience questions
+- Top-voted questions surface first
+- Can mark as answered or hide inappropriate ones
+- Use the moderation buttons (only visible in presenter view)
 -->
 
 ---

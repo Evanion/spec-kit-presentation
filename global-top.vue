@@ -1,7 +1,35 @@
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { usePresenterAuth } from './composables/usePresenterAuth'
+import { useSession } from './composables/useSession'
+import { useSlideSync } from './composables/useSlideSync'
+import ConnectionStatus from './components/ConnectionStatus.vue'
+
+const { isPresenter } = usePresenterAuth()
+const { initSession } = useSession()
+const { watchPresenterNav } = useSlideSync()
+
+onMounted(async () => {
+  if (isPresenter.value) {
+    await initSession()
+    // Watch slide navigation and broadcast changes
+    // $nav is injected by Slidev; access via useNav if available
+    try {
+      const { useNav } = await import('@slidev/client')
+      const nav = useNav()
+      watchPresenterNav(nav.currentPage)
+    } catch {
+      // Not in Slidev context (shouldn't happen in presenter view)
+    }
+  }
+})
+</script>
+
 <template>
   <div class="regent-header">
     <img src="/images/regent-logo.svg" alt="Regent" class="regent-header-logo" />
   </div>
+  <ConnectionStatus v-if="isPresenter" />
 </template>
 
 <style>
