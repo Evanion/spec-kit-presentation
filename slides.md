@@ -1,6 +1,6 @@
 ---
 theme: none
-title: "CLAUDE.md rules and plan mode only get you so far"
+title: "Spec-Driven Development"
 info: "Regent company conference presentation"
 author: "Mikael Pettersson"
 colorSchema: dark
@@ -18,9 +18,11 @@ layout: center
 #   All gaps ≤ 4 ✓  (22 slides total)
 ---
 
-# CLAUDE.md rules and plan mode only get you so far
+<p class="text-regent-secondary text-base tracking-wide opacity-80">CLAUDE.md rules and plan mode only get you so far</p>
 
-<p class="text-regent-secondary text-xl mt-4">Spec-Driven Development: Making Intent the Source of Truth</p>
+<h1 class="text-regent-light !text-5xl font-bold !leading-tight !mb-2 !mt-4">Spec-Driven Development</h1>
+
+<p class="text-regent-secondary text-xl">Making Intent the Source of Truth</p>
 
 <p class="text-regent-secondary text-sm opacity-60 mt-auto">
   Mikael Pettersson &middot; Competence Conference 2026
