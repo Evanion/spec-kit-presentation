@@ -1,8 +1,20 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+
+const formattedDate = computed(() => {
+  return new Intl.DateTimeFormat('sv-SE', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date())
+})
+</script>
+
 <template>
   <div class="regent-footer">
     <div class="regent-footer-left">
       <img src="/images/regent-icon.svg" alt="" class="regent-footer-icon" />
-      <span class="regent-footer-date">{{ new Date().toISOString().slice(0, 10) }}</span>
+      <span class="regent-footer-date">{{ formattedDate }}</span>
     </div>
     <div class="regent-footer-center">IT som det borde vara</div>
     <div class="regent-footer-right">Slide {{ $nav.currentPage }}</div>
