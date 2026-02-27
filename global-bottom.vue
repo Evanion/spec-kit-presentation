@@ -2,7 +2,7 @@
   <div class="regent-footer">
     <div class="regent-footer-left">
       <img src="/images/regent-icon.svg" alt="" class="regent-footer-icon" />
-      <span class="regent-footer-date">2026-02-26</span>
+      <span class="regent-footer-date">{{ new Date().toISOString().slice(0, 10) }}</span>
     </div>
     <div class="regent-footer-center">IT som det borde vara</div>
     <div class="regent-footer-right">Slide {{ $nav.currentPage }}</div>
