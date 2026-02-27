@@ -3,11 +3,19 @@
   "private": true,
   "scripts": {
     "dev": "slidev",
-    "build": "slidev build",
+    "build": "slidev build && vite build --config vite.audience.config.ts",
+    "build:slides": "slidev build",
+    "build:audience": "vite build --config vite.audience.config.ts",
     "export": "slidev export"
   },
   "dependencies": {
     "@slidev/cli": "^51.0.0",
-    "@slidev/theme-default": "latest"
+    "@slidev/theme-default": "latest",
+    "@supabase/supabase-js": "^2.98.0",
+    "qrcode-svg": "^1.1.0"
+  },
+  "devDependencies": {
+    "@axe-core/cli": "^4.11.1",
+    "@vitejs/plugin-vue": "^6.0.4"
   }
 }
