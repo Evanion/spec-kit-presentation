@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "skills": {
+    "giving-presentations": {
+      "source": "refoundai/lenny-skills",
+      "sourceType": "github",
+      "computedHash": "cca5aede5d8f96d8823ec6d7264d613ce6b0b6f055a7d011c8b706218fbdf629"
+    },
+    "presentation-design": {
+      "source": "jwynia/agent-skills",
+      "sourceType": "github",
+      "computedHash": "8fabe8c0e7028b444c5b8ebc3e4edc7a8e8baf74bd606dc51d03f1b38943bbfc"
+    },
+    "slidev": {
+      "source": "slidevjs/slidev",
+      "sourceType": "github",
+      "computedHash": "320b8bc23ecde7db7deb6b33d295707928e407f3b74ba9906b4afda26cce9e03"
+    },
+    "supabase-postgres-best-practices": {
+      "source": "supabase/agent-skills",
+      "sourceType": "github",
+      "computedHash": "9c87c315aed143ee3b34bec8117100f5035e0df09e6b23e1ecc772cff434c9ad"
+    },
+    "vite": {
+      "source": "antfu/skills",
+      "sourceType": "github",
+      "computedHash": "0293c251e4d6ff4818e8d2faed2a92f98d8d73c2f4819bd754faf93ca134d6fe"
+    },
+    "vue-best-practices": {
+      "source": "antfu/skills",
+      "sourceType": "github",
+      "computedHash": "eef7ee82688c9541f91b3f1050e79a5c978ddcc2c776a4bf31a11ba37c7901e8"
+    }
+  }
+}
