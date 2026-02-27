@@ -7,5 +7,11 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #2590 | 2:28 PM | ✅ | Adjusted poll slide number mapping after slide reordering | ~361 |
+| #2589 | 2:27 PM | ✅ | Adjusted first poll slide number from 7 to 6 in poll-config.ts | ~313 |
+| #2567 | 12:15 PM | ✅ | Updated poll slide number reference after slide reordering | ~361 |
+| #2566 | " | ✅ | Updated poll configuration slide numbers after deck reorganization | ~374 |
+| #2565 | 12:14 PM | ✅ | Updated first poll slide number after title slide reordering | ~362 |
+| #2495 | 9:38 AM | ⚖️ | PR #1 CLAUDE.md Compliance Review Completed - No Violations Found | ~446 |
 | #2468 | 8:46 AM | 🟣 | Created poll configuration file as single source of truth | ~410 |
 </claude-mem-context>
