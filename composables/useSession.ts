@@ -1,8 +1,7 @@
 import { ref, readonly } from 'vue'
 import { usePresenterAuth } from './usePresenterAuth'
 import { FUNCTIONS_BASE } from '../lib/constants'
-import { pollConfig } from '../lib/poll-config'
-import type { Session, Poll, CreateSessionResponse } from '../lib/types'
+import type { Session, Poll, PollConfig, CreateSessionResponse } from '../lib/types'
 
 const session = ref<Pick<Session, 'id' | 'status' | 'current_slide' | 'created_at'> | null>(null)
 const polls = ref<Array<Pick<Poll, 'id' | 'slide_number' | 'question' | 'options' | 'status'>>>([])
@@ -12,7 +11,7 @@ const error = ref<string | null>(null)
 export function useSession() {
   const { isPresenter, getAuthHeaders } = usePresenterAuth()
 
-  async function initSession(): Promise<void> {
+  async function initSession(pollConfigs: PollConfig[] = []): Promise<void> {
     if (!isPresenter.value) return
     if (session.value) return // Already initialized
 
@@ -27,7 +26,7 @@ export function useSession() {
           ...getAuthHeaders(),
         },
         body: JSON.stringify({
-          polls: pollConfig.map((p) => ({
+          polls: pollConfigs.map((p) => ({
             slide_number: p.slideNumber,
             question: p.question,
             options: p.options,

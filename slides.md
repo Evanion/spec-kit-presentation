@@ -12,10 +12,9 @@ transition: slide-left
 mdc: true
 lineNumbers: true
 layout: center
-# Interaction point spacing (gaps between interaction slides):
-#   QR(2) → Poll1(7): 4 | Poll1(7) → Verbal(9): 1 | Verbal(9) → Poll2(11): 1
-#   Poll2(11) → Callback(15): 3 | Callback(15) → Poll3(17): 1 | Poll3(17) → Q&A(20): 2
-#   All gaps ≤ 4 ✓  (22 slides total)
+# Polls are inline on content slides via frontmatter (no standalone poll slides)
+# Poll slide numbers are auto-detected from frontmatter at runtime
+# (18 slides total)
 ---
 
 <p class="text-regent-secondary text-base tracking-wide opacity-80">CLAUDE.md rules and plan mode only get you so far</p>
@@ -28,33 +27,18 @@ layout: center
   Mikael Pettersson &middot; Competence Conference 2026
 </p>
 
+<div class="absolute bottom-12 right-8 flex flex-col items-center gap-1">
+  <AudienceQrCode :size="140" />
+  <p class="text-regent-secondary text-xs opacity-70">Scan to join</p>
+</div>
+
 <!--
 - Open with the pain: "Who uses CLAUDE.md / .cursorrules / rules files?" → hands up
 - "Plan mode? Tickets?" → most hands
 - "And how often does the AI actually build what you wanted?" → knowing looks
 - You're ahead of most teams — but these tools still leave a gap
 - Today: how to close that gap with one practice — write specs before code
--->
-
----
-layout: center
----
-
-# Scan to Join
-
-<div class="mt-6">
-  <AudienceQrCode />
-</div>
-
-<p class="text-regent-secondary text-sm mt-4 opacity-80">
-  Open on your phone to participate in live polls and Q&A
-</p>
-
-<!--
-- Ask everyone to scan the QR code
-- Opens a mobile participation page
-- You'll be able to vote on polls and ask questions
-- No login required
+- QR code in corner — scan while settling in for live polls and Q&A
 -->
 
 ---
@@ -97,7 +81,7 @@ Jira, GH Issues, plan mode...
 </div>
 </div>
 
-<div class="p-3 rounded bg-regent-master opacity-50">
+<div class="p-3 rounded bg-regent-master border border-dashed border-regent-cyan/50">
 
 ### ???
 <div class="text-regent-secondary mt-1">
@@ -137,6 +121,9 @@ The missing layer
 - That third column is intentionally vague — we'll fill it in soon
 -->
 
+---
+poll: "How often does AI-generated code match what you actually wanted?"
+pollOptions: ["Almost always", "About half the time", "Rarely", "I've stopped hoping"]
 ---
 
 # Every correction makes the next prompt worse
@@ -210,6 +197,10 @@ Also add rate limiting. And tests."
 
 </div>
 
+<div class="absolute bottom-10 right-6 w-72 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
+  <LivePoll :question="$frontmatter.poll" />
+</div>
+
 <!--
 - LEFT: diagram shows each attempt diverging further from your intent
 - RIGHT: magic-move walkthrough of a real example
@@ -222,6 +213,7 @@ Also add rate limiting. And tests."
 - Why now? AI is powerful enough to generate the WRONG thing at scale
 - Wrong assumptions compound — by prompt 5, you're debugging a castle on sand
 - The better the AI gets, the more dangerous unstructured prompting becomes
+- POLL: audience votes while you talk through the decay
 -->
 
 ---
@@ -340,29 +332,6 @@ graph TD
 - Works with any AI: Copilot, Claude Code, Gemini CLI
 - Six commands, each mapping to a workflow phase
 - Let me show you how the workflow works
--->
-
----
-
-# Quick Poll
-
-<div class="mt-4">
-
-<LivePoll question="How often does AI-generated code match what you actually wanted?" />
-
-<PollResults
-  :slide-number="$nav.currentPage"
-  question="How often does AI-generated code match what you actually wanted?"
-  :options="['Almost always', 'About half the time', 'Rarely', `I've stopped hoping`]"
-/>
-
-</div>
-
-<!--
-- Real question — surfaces the pain everyone just saw in the decay spiral
-- Results update live on screen
-- Use responses to transition: "So most of us have felt this..."
-- Connects the problem to the solution we're about to show
 -->
 
 ---
@@ -494,6 +463,9 @@ exceptions. Fail gracefully, log clearly.
 -->
 
 ---
+poll: "Would you try spec-driven development on your next feature?"
+pollOptions: ["Yes, immediately", "Maybe, need to see more", "Not convinced yet", "Already doing something similar"]
+---
 
 # From intent to architecture in 15 minutes
 
@@ -555,37 +527,19 @@ exceptions. Fail gracefully, log clearly.
 15 minutes of specification prevents 3 hours of rework.
 </div>
 
+<div class="absolute bottom-10 right-6 w-72 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
+  <LivePoll :question="$frontmatter.poll" />
+</div>
+
 <!--
 - Watch the progression through three steps
 - **Specify:** pure intent — what and why, never how
 - **Clarify:** confront every ambiguity BEFORE code
 - NEEDS CLARIFICATION markers = quality gates — no planning until resolved
 - **Plan:** only NOW do we bring in technology
+- POLL: gauge audience interest after seeing the workflow
 - Constitutional compliance check at bottom — every plan validated
 - ~15 minutes total vs 3 hours of prompt-and-pray
--->
-
----
-
-# How are you feeling about this?
-
-<div class="mt-4">
-
-<LivePoll question="Would you try spec-driven development on your next feature?" />
-
-<PollResults
-  :slide-number="$nav.currentPage"
-  question="Would you try spec-driven development on your next feature?"
-  :options="['Yes, immediately', 'Maybe, need to see more', 'Not convinced yet', 'Already doing something similar']"
-/>
-
-</div>
-
-<!--
-- Check-in after the demo — gauge where the audience is
-- "Yes" = great, keep building on it
-- "Not convinced" = perfect, the objection slides are next
-- Use this to frame the transition: "Let's address the skepticism..."
 -->
 
 ---
@@ -886,6 +840,9 @@ Remember the decay spiral? 15 minutes of specification prevents that entire cycl
 -->
 
 ---
+poll: "After hearing the objections and responses, where do you stand?"
+pollOptions: ["More convinced than before", "About the same", "Less convinced", "Need to try it first"]
+---
 
 # "What about when requirements change?"
 
@@ -947,6 +904,10 @@ Update the spec, not patch the code.
 
 </div>
 
+<div class="absolute bottom-10 right-6 w-72 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
+  <LivePoll :question="$frontmatter.poll" />
+</div>
+
 <!--
 - Requirements WILL change — that's not a question
 - The question: how painful is it when they do?
@@ -955,29 +916,7 @@ Update the spec, not patch the code.
 - New plan → new tasks → new code → new tests
 - Constitution catches violations, tests validate the change
 - SDD doesn't prevent change — it makes change cheap and safe
--->
-
----
-
-# Where do you stand?
-
-<div class="mt-4">
-
-<LivePoll question="After hearing the objections and responses, where do you stand?" />
-
-<PollResults
-  :slide-number="$nav.currentPage"
-  question="After hearing the objections and responses, where do you stand?"
-  :options="['More convinced than before', 'About the same', 'Less convinced', 'Need to try it first']"
-/>
-
-</div>
-
-<!--
-- Sentiment check after the objection gauntlet
-- Audience has heard the strongest pushback AND the responses
-- "Need to try it first" is a great answer — that's exactly the CTA
-- Use results to frame the use cases: "Let me show you where this works..."
+- POLL: final sentiment check — audience votes while absorbing the argument
 -->
 
 ---

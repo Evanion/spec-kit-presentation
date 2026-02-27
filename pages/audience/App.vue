@@ -3,7 +3,6 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useSupabase } from '../../composables/useSupabase'
 import { useDeviceId } from '../../composables/useDeviceId'
 import { BROADCAST_CHANNEL, SLIDE_CHANGE_EVENT } from '../../lib/constants'
-import { pollConfig } from '../../lib/poll-config'
 import type { Session, Poll } from '../../lib/types'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 import StatusMessage from './components/StatusMessage.vue'
@@ -21,11 +20,6 @@ const sessionStatus = ref<'loading' | 'active' | 'waiting' | 'ended'>('loading')
 
 let slideChannel: RealtimeChannel | null = null
 let sessionChannel: RealtimeChannel | null = null
-
-// Determine which poll config matches the current slide
-const currentPollConfig = computed(() => {
-  return pollConfig.find((p) => p.slideNumber === currentSlide.value) || null
-})
 
 async function fetchSession() {
   if (!supabase) {
