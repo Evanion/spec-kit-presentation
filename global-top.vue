@@ -1,26 +1,43 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { inject, onMounted, computed, watch } from 'vue'
 import { usePresenterAuth } from './composables/usePresenterAuth'
 import { useSession } from './composables/useSession'
 import { useSlideSync } from './composables/useSlideSync'
 import ConnectionStatus from './components/ConnectionStatus.vue'
+import type { PollConfig } from './lib/types'
 
 const { isPresenter } = usePresenterAuth()
 const { initSession } = useSession()
-const { watchPresenterNav } = useSlideSync()
+const { syncSlide } = useSlideSync()
+
+const slidevContext = inject('$$slidev-context') as {
+  nav: {
+    currentSlideNo: number
+    slides: Array<{ no: number; meta: { slide: { frontmatter: Record<string, any> } } }>
+  }
+} | undefined
+const currentPage = computed(() => slidevContext?.nav?.currentSlideNo ?? 1)
+
+// Extract poll configs from slide frontmatter — no hardcoded slide numbers needed
+function getPollConfigs(): PollConfig[] {
+  const slides = slidevContext?.nav?.slides
+  if (!slides) return []
+  return slides
+    .filter(s => s.meta?.slide?.frontmatter?.poll)
+    .map(s => ({
+      slideNumber: s.no,
+      question: s.meta.slide.frontmatter.poll as string,
+      options: s.meta.slide.frontmatter.pollOptions as string[],
+    }))
+}
 
 onMounted(async () => {
   if (isPresenter.value) {
-    await initSession()
-    // Watch slide navigation and broadcast changes
-    // $nav is injected by Slidev; access via useNav if available
-    try {
-      const { useNav } = await import('@slidev/client')
-      const nav = useNav()
-      watchPresenterNav(nav.currentPage)
-    } catch {
-      // Not in Slidev context (shouldn't happen in presenter view)
-    }
+    await initSession(getPollConfigs())
+    // Watch slide navigation and broadcast changes via Slidev context injection
+    watch(currentPage, (page) => {
+      syncSlide(page)
+    })
   }
 })
 </script>

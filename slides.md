@@ -1,6 +1,6 @@
 ---
 theme: none
-title: "Specification-Driven Development: Making Intent the Source of Truth"
+title: "Spec-Driven Development"
 info: "Regent company conference presentation"
 author: "Mikael Pettersson"
 colorSchema: dark
@@ -12,81 +12,86 @@ transition: slide-left
 mdc: true
 lineNumbers: true
 layout: center
+# Polls are inline on content slides via frontmatter (no standalone poll slides)
+# Poll slide numbers are auto-detected from frontmatter at runtime
+# (18 slides total)
 ---
 
-# Spec-Driven Development
+<p class="text-regent-secondary text-base tracking-wide opacity-80">CLAUDE.md rules and plan mode only get you so far</p>
 
-<p class="text-regent-secondary text-xl mt-4">Making Intent the Source of Truth</p>
+<h1 class="text-regent-light !text-5xl font-bold !leading-tight !mb-2 !mt-4">Spec-Driven Development</h1>
 
-<p class="text-regent-secondary text-sm mt-6 opacity-80">CLAUDE.md rules and plan mode only get you so far.</p>
+<p class="text-regent-secondary text-xl">Making Intent the Source of Truth</p>
 
 <p class="text-regent-secondary text-sm opacity-60 mt-auto">
   Mikael Pettersson &middot; Competence Conference 2026
 </p>
 
-<!--
-- Ask: "Who uses CLAUDE.md / .cursorrules / rules files?" → hands up
-- Ask: "Plan mode? Tickets?"
-- You're ahead of most teams
-- But these tools still leave a gap — today we close it
--->
-
----
-layout: center
----
-
-# Scan to Join
-
-<div class="mt-6">
-  <AudienceQrCode />
+<div class="absolute bottom-12 right-8 flex flex-col items-center gap-1">
+  <AudienceQrCode :size="140" />
+  <p class="text-regent-secondary text-xs opacity-70">Scan to join</p>
 </div>
 
-<p class="text-regent-secondary text-sm mt-4 opacity-80">
-  Open on your phone to participate in live polls and Q&A
-</p>
-
 <!--
-- Ask everyone to scan the QR code
-- Opens a mobile participation page
-- You'll be able to vote on polls and ask questions
-- No login required
+- Open with the pain: "Who uses CLAUDE.md / .cursorrules / rules files?" → hands up
+- "Plan mode? Tickets?" → most hands
+- "And how often does the AI actually build what you wanted?" → knowing looks
+- You're ahead of most teams — but these tools still leave a gap
+- Today: how to close that gap with one practice — write specs before code
+- QR code in corner — scan while settling in for live polls and Q&A
 -->
 
 ---
 
-# Where We Are Today
+# Rules, plans, and tickets leave a gap
 
-<div class="mt-4">
+<div class="mt-2">
 
 <v-click>
 
-<div class="grid grid-cols-3 gap-4">
-<div class="p-4 rounded bg-regent-master">
+<div class="grid grid-cols-3 gap-4 text-sm">
+
+<div class="p-3 rounded bg-regent-master">
 
 ### Rules files
-<div class="text-regent-secondary text-sm mt-1">
+<div class="text-regent-secondary mt-1">
 
-CLAUDE.md, .cursorrules — tells AI **how** to code. Formatting, patterns, conventions.
+CLAUDE.md, .cursorrules, copilot-instructions...
 
-</div>
-</div>
-
-<div class="p-4 rounded bg-regent-master">
-
-### Plan mode
-<div class="text-regent-secondary text-sm mt-1">
-
-Think before coding. Better than raw prompting. But plans are **ephemeral** — gone next session.
+- Tell AI **how** to code
+- Can include quality rules
+- But enforcement is **best-effort**
+- AI may forget or deprioritize
 
 </div>
 </div>
 
-<div class="p-4 rounded bg-regent-master">
+<div class="p-3 rounded bg-regent-master">
 
-### Tickets
-<div class="text-regent-secondary text-sm mt-1">
+### Tickets + Plan mode
+<div class="text-regent-secondary mt-1">
 
-Jira, GH Issues — tracks **work items**. But the AI interprets each ticket differently every time.
+Jira, GH Issues, plan mode...
+
+- Describe **work items**
+- Plans help thinking but are **ephemeral**
+- AI interprets differently each time
+- No structured validation step
+
+</div>
+</div>
+
+<div class="p-3 rounded bg-regent-master border border-dashed border-regent-cyan/50">
+
+### ???
+<div class="text-regent-secondary mt-1">
+
+The missing layer
+
+- Defines **what** and **why**
+- Quality gates that **block**, not suggest
+- Compliance checked at every step
+- Traceable: intent → code
 
 </div>
 </div>
@@ -97,11 +102,9 @@ Jira, GH Issues — tracks **work items**. But the AI interprets each ticket dif
 
 <v-click>
 
-<div class="mt-4 p-4 rounded bg-regent-master border-l-4 border-regent-cyan">
+<div class="mt-3 p-3 rounded bg-regent-master border-l-4 border-regent-cyan text-sm">
 
-### The gap
-
-Rules tell the AI **how**. Tickets tell the AI **what** to work on. You can even add quality rules to CLAUDE.md — but enforcement is best-effort. Nothing **structurally ensures** the AI builds what you intended, with enforced compliance checks and traceability from intent to code.
+**They're good tools — but there's a gap.** Rules tell AI *how* to code. Tickets say *what* to work on. Nothing structurally ensures the AI builds what you intended, with enforced compliance and traceability from intent to code.
 
 </div>
 
@@ -110,19 +113,47 @@ Rules tell the AI **how**. Tickets tell the AI **what** to work on. You can even
 </div>
 
 <!--
-- Rules files, plan mode, tickets — all useful, all good
-- You CAN put quality rules in CLAUDE.md ("always write tests first")
-- Problem: AI TRIES to follow them, but doesn't always succeed
-- No structural checkpoint that says "stop, you skipped the tests"
-- Plan mode helps thinking, but plans vanish when session ends
+- Rules, plan mode, tickets — all useful, complementary tools
+- You CAN put quality gates in CLAUDE.md — enforcement is best-effort
+- Nothing BLOCKS the AI from proceeding if it skips a rule
+- Plan mode helps but plans vanish when session ends
 - The gap: nothing ENFORCES compliance or traces intent → code
+- That third column is intentionally vague — we'll fill it in soon
 -->
 
 ---
+poll: "How often does AI-generated code match what you actually wanted?"
+pollOptions: ["Almost always", "About half the time", "Rarely", "I've stopped hoping"]
+---
 
-# The Decay Spiral
+# Every correction makes the next prompt worse
 
-<div class="mt-4">
+<div class="mt-2 grid grid-cols-[1fr_2fr] gap-4">
+
+<div>
+
+```mermaid
+graph TD
+    P["Vague Prompt"] --> A1["Attempt 1"]
+    A1 -->|"fix"| A2["Attempt 2"]
+    A2 -->|"fix"| A3["Attempt 3"]
+    A3 -->|"fix"| A4["Attempt 4"]
+    I["Your Intent"] -.->|"diverging"| A1
+    I -.->|"further"| A2
+    I -.->|"even further"| A3
+    I -.->|"lost"| A4
+
+    style P fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
+    style I fill:#0099CC,stroke:#3FCDFA,color:#F8F8F8
+    style A1 fill:#4D4E5C,stroke:#3FCDFA,color:#F8F8F8
+    style A2 fill:#4D4E5C,stroke:#E8A735,color:#F8F8F8
+    style A3 fill:#4D4E5C,stroke:#E87435,color:#F8F8F8
+    style A4 fill:#4D4E5C,stroke:#E84035,color:#F8F8F8
+```
+
+</div>
+
+<div>
 
 ````md magic-move
 ```markdown
@@ -164,83 +195,30 @@ Also add rate limiting. And tests."
 
 </div>
 
+</div>
+
+<div class="absolute bottom-10 right-6 w-72 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
+  <LivePoll :question="$frontmatter.poll" />
+</div>
+
 <!--
+- LEFT: diagram shows each attempt diverging further from your intent
+- RIGHT: magic-move walkthrough of a real example
 - This happens even WITH rules + plan mode
-- Vague prompt → AI fills in the blanks
-- Rules govern style, not INTENT (picks JWT when you wanted sessions)
-- You correct → AI rewrites from scratch, new patterns
-- Plan mode helped once, but that plan is gone next session
-- Each iteration diverges further
+- Vague prompt → AI fills in the blanks with assumptions
+- Rules govern style, not INTENT — picks JWT when you wanted sessions
+- Each iteration diverges further from what you actually wanted
 - Key insight: this is a specification problem, not an AI problem
+- The fix: write specs before code — tell the AI WHAT and WHY first
+- Why now? AI is powerful enough to generate the WRONG thing at scale
+- Wrong assumptions compound — by prompt 5, you're debugging a castle on sand
+- The better the AI gets, the more dangerous unstructured prompting becomes
+- POLL: audience votes while you talk through the decay
 -->
 
 ---
 
-# Why Now: Three Converging Trends
-
-<div class="mt-4 grid grid-cols-3 gap-5">
-
-<v-click>
-
-<div class="p-4 rounded bg-regent-master">
-
-### AI Capability Threshold
-
-AI is now powerful enough to generate **the wrong thing at scale**.
-
-<div class="text-regent-secondary text-sm mt-3">
-A bad assumption at line 1 becomes 500 lines of confidently wrong code. The better the AI gets, the more dangerous unstructured prompting becomes.
-</div>
-
-</div>
-
-</v-click>
-
-<v-click>
-
-<div class="p-4 rounded bg-regent-master">
-
-### Exponential Complexity
-
-Wrong assumptions **compound**.
-
-<div class="text-regent-secondary text-sm mt-3">
-One vague prompt creates an architecture. The next prompt builds on that architecture. By prompt 5, you're debugging a castle built on sand.
-</div>
-
-</div>
-
-</v-click>
-
-<v-click>
-
-<div class="p-4 rounded bg-regent-master">
-
-### Acceleration of Change
-
-Codebases that can't be reasoned about **can't be adapted**.
-
-<div class="text-regent-secondary text-sm mt-3">
-When requirements change (and they will), vibe-coded systems resist modification because nobody — including the AI — understands the intent behind the code.
-</div>
-
-</div>
-
-</v-click>
-
-</div>
-
-<!--
-- Why now, when we already have rules + plan mode?
-- **Capability:** AI generates complex systems → rules alone can't prevent the WRONG complex system
-- **Compounding:** Wrong assumptions stack up; plan mode helps once but doesn't persist
-- **Adaptability:** Codebases nobody can reason about can't be adapted when requirements change
-- You need more than rules — you need structured, enforceable specifications
--->
-
----
-
-# The Inversion
+# Make the spec the artifact, not the code
 
 <div class="mt-3 space-y-3">
 
@@ -256,32 +234,38 @@ When requirements change (and they will), vibe-coded systems resist modification
 
 <v-click>
 
-| Traditional | Spec-Driven |
-|---|---|
-| Code is the artifact | Specification is the artifact |
-| Docs describe code | Specs generate code |
-| Fix bugs in code | Fix bugs in specs |
-| Refactor = rewrite code | Refactor = restructure specs |
+<div class="grid grid-cols-2 gap-6 mt-2">
 
-</v-click>
+<div class="text-center">
+<div class="text-regent-secondary text-xs mb-1 uppercase tracking-wider">Traditional</div>
 
-<v-click>
+```mermaid
+graph TD
+    C["💻 Code<br/><i>primary artifact</i>"] --> D["📄 Docs"]
+    C --> T["🧪 Tests"]
+    C -->|"bugs?"| C
 
-<div class="grid grid-cols-3 gap-4 mt-2 text-center text-sm">
+    style C fill:#E84035,stroke:#E87435,color:#F8F8F8
+    style D fill:#4D4E5C,stroke:#4D4E5C,color:#DADCF1
+    style T fill:#4D4E5C,stroke:#4D4E5C,color:#DADCF1
+```
 
-<div class="p-2 rounded bg-regent-master">
-<div class="text-regent-bright font-bold">Debugging</div>
-<div class="text-regent-secondary mt-1">Fix the spec, regenerate</div>
 </div>
 
-<div class="p-2 rounded bg-regent-master">
-<div class="text-regent-bright font-bold">Refactoring</div>
-<div class="text-regent-secondary mt-1">Restructure the spec, regenerate</div>
-</div>
+<div class="text-center">
+<div class="text-regent-secondary text-xs mb-1 uppercase tracking-wider">Spec-Driven</div>
 
-<div class="p-2 rounded bg-regent-master">
-<div class="text-regent-bright font-bold">New Features</div>
-<div class="text-regent-secondary mt-1">Extend the spec, regenerate</div>
+```mermaid
+graph TD
+    S["📋 Spec<br/><i>primary artifact</i>"] --> T["🧪 Tests"]
+    T --> C["💻 Code"]
+    C -->|"bugs?"| S
+
+    style S fill:#0099CC,stroke:#3FCDFA,color:#F8F8F8
+    style T fill:#00ACE6,stroke:#3FCDFA,color:#F8F8F8
+    style C fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
+```
+
 </div>
 
 </div>
@@ -291,18 +275,18 @@ When requirements change (and they will), vibe-coded systems resist modification
 </div>
 
 <!--
-- This sits ABOVE rules files and tickets
-- Rules = how to write code; Tickets = what to work on
+- The core practice: write specs before code
 - SDD flips it: the SPECIFICATION is the primary artifact
-- Code is generated FROM specs
+- Code is generated FROM specs — not the other way around
 - Something wrong? Fix the spec, not the code
 - CLAUDE.md still governs style, tickets still track work
-- Spec governs WHAT gets built and WHY — that's the missing layer
+- Spec governs WHAT gets built and WHY — the missing layer
+- Spec-kit is one tool that makes this practice easy — but the practice matters more
 -->
 
 ---
 
-# What is spec-kit?
+# Six commands from intent to code
 
 <div class="mt-2 space-y-2">
 
@@ -342,120 +326,17 @@ When requirements change (and they will), vibe-coded systems resist modification
 </div>
 
 <!--
-- How do you actually DO this? → spec-kit
-- GitHub's open source toolkit: structure, commands, quality gates
-- The missing layer between rules files and tickets
-- Works with any AI tool: Copilot, Claude Code, Gemini CLI
+- "So how do you actually write specs before code?"
+- Spec-kit: GitHub's open source toolkit for structured specifications
+- It's one way to do it — the practice matters more than the tool
+- Works with any AI: Copilot, Claude Code, Gemini CLI
 - Six commands, each mapping to a workflow phase
-- Let me walk through them
+- Let me show you how the workflow works
 -->
 
 ---
 
-# "Can't I just use CLAUDE.md and Jira?"
-
-<div class="mt-2">
-
-<v-click>
-
-<div class="grid grid-cols-3 gap-4 text-sm">
-
-<div class="p-3 rounded bg-regent-master">
-
-### Rules files
-<div class="text-regent-secondary mt-1">
-
-CLAUDE.md, .cursorrules, copilot-instructions...
-
-- Tell AI **how** to code
-- Can include quality rules
-- But enforcement is **best-effort**
-- AI may forget or deprioritize
-
-</div>
-</div>
-
-<div class="p-3 rounded bg-regent-master">
-
-### Tickets + Plan mode
-<div class="text-regent-secondary mt-1">
-
-Jira, GH Issues, plan mode...
-
-- Describe **work items**
-- Plans help thinking but are **ephemeral**
-- AI interprets differently each time
-- No structured validation step
-
-</div>
-</div>
-
-<div class="p-3 rounded bg-regent-master border-l-4 border-regent-cyan">
-
-### Spec-kit
-<div class="text-regent-secondary mt-1">
-
-Structured specification workflow
-
-- Defines **what** and **why**
-- Quality gates **block** bad specs
-- Compliance checked at every step
-- Traceable: intent → code
-
-</div>
-</div>
-
-</div>
-
-</v-click>
-
-<v-click>
-
-<div class="mt-3 p-3 rounded bg-regent-master border-l-4 border-regent-cyan text-sm">
-
-**They're complementary, not competing.** Rules files set coding conventions. Tickets track work. Spec-kit sits *in between* — it's the structured bridge from intent to implementation that ensures the AI generates consistent, traceable code every time.
-
-</div>
-
-</v-click>
-
-</div>
-
-<!--
-- "Can't I just put quality gates in CLAUDE.md?" → Yes, and you should
-- But CLAUDE.md enforcement is best-effort
-- Nothing structurally BLOCKS the AI from proceeding if it skips a rule
-- Long sessions → rules get deprioritized
-- No checkpoint saying "stop — you violated Article 2"
-- Spec-kit adds explicit compliance checks at every workflow step
-- Doesn't replace rules files — enforces what rules can only ask for
--->
-
----
-
-# Quick Poll
-
-<div class="mt-4">
-
-<LivePoll question="What's your AI planning approach?" />
-
-<PollResults
-  :slide-number="$nav.currentPage"
-  question="What's your AI planning approach?"
-  :options="['I spec my kits', 'Plan mode, more like pain mode', 'WTF AI can plan?']"
-/>
-
-</div>
-
-<!--
-- Quick temperature check with the audience
-- Poll is live on their phones — results update in real-time
-- Transition: "Now that we know where everyone stands..."
--->
-
----
-
-# The SDD Workflow
+# The feedback loop goes to specs, not code
 
 <div class="mt-2">
 
@@ -466,12 +347,13 @@ graph LR
     C --> D["4. Plan<br/><i>Tech & Architecture</i>"]
     D --> E["5. Tasks<br/><i>Decompose</i>"]
     E --> F["6. Implement<br/><i>Generate Code</i>"]
-    F -.->|"Fix specs,<br/>not code"| B
+    F -.->|"Bug / Change /<br/>New feature"| B
+    F -.->|"Evolve<br/>principles"| A
 
-    style A fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
-    style B fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
-    style C fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
-    style D fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
+    style A fill:#0099CC,stroke:#3FCDFA,color:#F8F8F8
+    style B fill:#0099CC,stroke:#3FCDFA,color:#F8F8F8
+    style C fill:#00ACE6,stroke:#3FCDFA,color:#F8F8F8
+    style D fill:#00ACE6,stroke:#3FCDFA,color:#F8F8F8
     style E fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
     style F fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
 ```
@@ -482,29 +364,37 @@ graph LR
 
 <div class="mt-4 text-center text-regent-secondary">
 
-The feedback loop goes back to **specifications**, not to code.
-<br/>When something's wrong, you fix the spec and regenerate.
+Without this, you're back to the decay spiral — each fix diverging further.
+<br/>The feedback loop goes back to **specifications**, not to code.
 
 </div>
 
 </v-click>
 
 <!--
-- Six steps, each building on the last
+- Six steps, each building on the last — a continuous cycle
+- Key: the feedback arrows go BACK to Specify and Constitution
+- Bug found → back to Specify; principles evolve → back to Constitution
 - This is what plan mode WOULD be if plans persisted + had quality gates
-- Key: the feedback arrow goes back to SPECIFY, not to code
-- That arrow = the opposite of waterfall
-- Waterfall: can't go back; SDD: going back is the whole point
+- The opposite of waterfall: going back IS the workflow
 - You iterate on specs, not on code
 -->
 
 ---
 
-# The Constitution & the 9 Articles
+# Quality gates that actually block bad output
 
 <div class="mt-2">
 
-> The governing principles that every specification must follow
+<v-click>
+
+<div class="p-3 rounded bg-regent-master border-l-4 border-regent-cyan text-sm mb-3">
+
+**Show of hands:** How many of you have rules in CLAUDE.md that your AI regularly ignores?
+
+</div>
+
+</v-click>
 
 <v-click>
 
@@ -563,6 +453,8 @@ exceptions. Fail gracefully, log clearly.
 </div>
 
 <!--
+- VERBAL PROMPT: "Show of hands — how many of you have rules in CLAUDE.md that your AI regularly ignores?" → wait for hands
+- "That's what I thought. The constitution fixes this."
 - Constitution = CLAUDE.md's big sibling
 - Rules file ASKS; constitution BLOCKS until compliance achieved
 - NON-NEGOTIABLE = hard quality gates — AI cannot proceed
@@ -571,8 +463,11 @@ exceptions. Fail gracefully, log clearly.
 -->
 
 ---
+poll: "Would you try spec-driven development on your next feature?"
+pollOptions: ["Yes, immediately", "Maybe, need to see more", "Not convinced yet", "Already doing something similar"]
+---
 
-# From Intent to Architecture
+# From intent to architecture in 15 minutes
 
 <div class="mt-2">
 
@@ -632,19 +527,24 @@ exceptions. Fail gracefully, log clearly.
 15 minutes of specification prevents 3 hours of rework.
 </div>
 
+<div class="absolute bottom-10 right-6 w-72 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
+  <LivePoll :question="$frontmatter.poll" />
+</div>
+
 <!--
 - Watch the progression through three steps
 - **Specify:** pure intent — what and why, never how
 - **Clarify:** confront every ambiguity BEFORE code
 - NEEDS CLARIFICATION markers = quality gates — no planning until resolved
 - **Plan:** only NOW do we bring in technology
+- POLL: gauge audience interest after seeing the workflow
 - Constitutional compliance check at bottom — every plan validated
 - ~15 minutes total vs 3 hours of prompt-and-pray
 -->
 
 ---
 
-# Tasks: Parallel & Traceable
+# Every task traces back to intent
 
 <div class="mt-2 grid grid-cols-2 gap-4">
 
@@ -704,16 +604,17 @@ exceptions. Fail gracefully, log clearly.
 </div>
 
 <!--
+- Remember prompt attempt 3? Each fix diverging further with no traceability?
+- Now each task traces back: task → spec → constitution
 - Tasks auto-generated from plan: own branch, dependencies, test requirements
 - Independent tasks run in parallel — two AI agents, no conflicts
-- Each task traces back: task → spec → constitution
 - This traceability makes code reviewable
 - PR review: you see WHY the code exists, not just WHAT it does
 -->
 
 ---
 
-# From Spec to Working Code
+# Acceptance criteria become tests become code
 
 <div class="mt-2">
 
@@ -781,7 +682,7 @@ export class AuthService {
 
 <div class="mt-1 text-center text-regent-secondary text-sm">
 
-Acceptance Criteria → Tests FIRST → Implementation. Every line traceable to intent.
+Remember the 500 lines of wrong code? This is how you prevent that. Every line traceable to intent.
 
 </div>
 
@@ -796,7 +697,7 @@ Acceptance Criteria → Tests FIRST → Implementation. Every line traceable to 
 
 ---
 
-# "This is just waterfall"
+# "I can already do this with CLAUDE.md"
 
 <div class="mt-4 grid grid-cols-2 gap-6">
 
@@ -804,17 +705,19 @@ Acceptance Criteria → Tests FIRST → Implementation. Every line traceable to 
 
 <div class="p-4 rounded bg-regent-master">
 
-### Waterfall
+### CLAUDE.md rules
 
-- Specs written once, frozen
-- Change = rewrite the project plan
-- Months between spec and code
-- Feedback loop: **none**
-- "We'll test at the end"
+- "Always write tests first"
+- "Follow single responsibility"
+- "Use error boundaries"
 
-<div class="mt-3 text-regent-secondary text-sm italic">
-Designed for a world where changing direction was expensive.
+<div class="mt-3 text-regent-secondary text-sm">
+
+AI **tries** to follow these. Sometimes it does. Sometimes it forgets. After 20 messages, it deprioritizes them. There's no checkpoint that says **"stop — you skipped the tests."**
+
 </div>
+
+<div class="mt-2 text-red-400 font-bold text-sm">Rules ASK.</div>
 
 </div>
 
@@ -824,17 +727,19 @@ Designed for a world where changing direction was expensive.
 
 <div class="p-4 rounded bg-regent-master border-l-4 border-regent-cyan">
 
-### Specification-Driven Development
+### Constitution + spec workflow
 
-- Specs are **living documents**
-- Change = update spec, regenerate
-- Minutes between spec and code
-- Feedback loop: **continuous**
-- "Tests are generated FIRST"
+- "Test-first [NON-NEGOTIABLE]"
+- "Single responsibility"
+- "Error boundaries [NON-NEGOTIABLE]"
 
-<div class="mt-3 text-regent-secondary text-sm italic">
-Designed for a world where AI makes changing direction cheap.
+<div class="mt-3 text-regent-secondary text-sm">
+
+The workflow **stops** if compliance fails. No tests? The plan won't generate. Violated Article 2? The task gets rejected. It's not a suggestion — it's a **gate**.
+
 </div>
+
+<div class="mt-2 text-regent-bright font-bold text-sm">Specs BLOCK.</div>
 
 </div>
 
@@ -844,22 +749,23 @@ Designed for a world where AI makes changing direction cheap.
 
 <v-click>
 
-<div class="mt-4 text-center">
+<div class="mt-3 text-center text-regent-secondary">
 
-Changing a spec in waterfall meant **rewriting the project plan**.
-<br/>In SDD, it means **re-running a command**.
+CLAUDE.md is great for style and conventions. But when you need the AI to **actually stop** when something's wrong — you need structural enforcement, not best-effort compliance.
 
 </div>
 
 </v-click>
 
 <!--
-- #1 objection — address it head-on
-- Both start with specs, but that's where similarity ends
-- Waterfall specs: frozen, change is expensive and political
-- SDD specs: living documents, change IS the workflow
-- The feedback arrow = the opposite of waterfall
-- Waterfall: "don't go back" → SDD: "going back is cheap, do it often"
+- #1 real-world objection — address it head-on
+- CLAUDE.md rules are valuable — keep using them for coding style
+- But enforcement is best-effort: AI tries, sometimes forgets, can't self-verify
+- Long sessions → rules get deprioritized or silently ignored
+- Constitution: NON-NEGOTIABLE = hard gate, workflow literally stops
+- Analogy: CLAUDE.md is speed limit signs; constitution is speed bumps
+- They're complementary: rules govern HOW, specs govern WHAT and enforce WHY
+- If someone pushes: "This is also not waterfall — specs are living documents, change is cheap"
 -->
 
 ---
@@ -878,34 +784,35 @@ Vibe coding is fast — until it isn't.
 
 <v-click>
 
-<div class="grid grid-cols-2 gap-6 mt-4">
+<div class="mt-4 space-y-4">
 
-<div class="p-4 rounded bg-regent-master text-center">
-
-### Vibe Coding
-
-<div class="text-3xl font-bold text-red-400 mt-2">~3 hours</div>
-
-<div class="text-regent-secondary text-sm mt-2">
-Prompt → fix → re-prompt → fix<br/>
-→ realize assumptions were wrong<br/>
-→ start over → fix → ship with doubt
+<div class="p-3 rounded bg-regent-master">
+<div class="flex justify-between items-center mb-2">
+<span class="font-bold">Vibe Coding</span>
+<span class="text-red-400 font-bold text-lg">~3 hours</span>
+</div>
+<div class="w-full h-6 bg-[#272833] rounded-full overflow-hidden flex text-xs">
+<div class="bg-[#4D4E5C] h-full flex items-center justify-center border-r border-[#272833]" style="width:25%">prompt</div>
+<div class="bg-[#E87435] h-full flex items-center justify-center border-r border-[#272833]" style="width:20%">fix</div>
+<div class="bg-[#4D4E5C] h-full flex items-center justify-center border-r border-[#272833]" style="width:15%">re-prompt</div>
+<div class="bg-[#E84035] h-full flex items-center justify-center border-r border-[#272833]" style="width:15%">fix</div>
+<div class="bg-[#E84035] h-full flex items-center justify-center border-r border-[#272833]" style="width:15%">start over</div>
+<div class="bg-[#E87435] h-full flex items-center justify-center" style="width:10%">ship?</div>
+</div>
 </div>
 
+<div class="p-3 rounded bg-regent-master border-l-4 border-regent-cyan">
+<div class="flex justify-between items-center mb-2">
+<span class="font-bold">Spec-Driven</span>
+<span class="text-green-400 font-bold text-lg">~45 min</span>
 </div>
-
-<div class="p-4 rounded bg-regent-master text-center border-l-4 border-regent-cyan">
-
-### Spec-Driven
-
-<div class="text-3xl font-bold text-green-400 mt-2">~45 minutes</div>
-
-<div class="text-regent-secondary text-sm mt-2">
-15 min spec → 5 min clarify<br/>
-→ 5 min plan → generate<br/>
-→ review traceable code → ship with confidence
+<div class="w-full h-6 bg-[#272833] rounded-full overflow-hidden flex text-xs">
+<div class="bg-[#0099CC] h-full flex items-center justify-center border-r border-[#272833]" style="width:33%">15 min spec</div>
+<div class="bg-[#00ACE6] h-full flex items-center justify-center border-r border-[#272833]" style="width:17%">clarify</div>
+<div class="bg-[#3FCDFA] h-full flex items-center justify-center border-r border-[#272833]" style="width:17%">plan</div>
+<div class="bg-[#0099CC] h-full flex items-center justify-center border-r border-[#272833]" style="width:17%">generate</div>
+<div class="bg-[#00ACE6] h-full flex items-center justify-center" style="width:16%">ship ✓</div>
 </div>
-
 </div>
 
 </div>
@@ -928,73 +835,13 @@ Remember the decay spiral? 15 minutes of specification prevents that entire cycl
 - Spec pays for itself on the FIRST feature
 - Compounds: 2nd feature faster (constitution exists), 3rd faster (patterns established)
 - Vibe coding = constant cost; SDD = decreasing cost over time
+- If someone says "AI is good enough without this" → the better AI gets, the MORE important structure is
+- A powerful tool with vague instructions = wrong things at scale
 -->
 
 ---
-
-# "AI is good enough without this"
-
-<div class="mt-6 space-y-4">
-
-<v-click>
-
-<div class="p-4 rounded bg-regent-master border-l-4 border-regent-cyan">
-<div class="text-lg">
-
-A powerful tool with vague instructions is a **liability**, not a productivity boost.
-
-</div>
-</div>
-
-</v-click>
-
-<v-click>
-
-<div class="grid grid-cols-2 gap-6 mt-2">
-
-<div class="p-4 rounded bg-regent-master">
-
-### What AI excels at
-- Generating code from clear specs
-- Following established patterns
-- Maintaining consistency within constraints
-- Translating intent into implementation
-
-</div>
-
-<div class="p-4 rounded bg-regent-master">
-
-### What AI cannot do
-- Read your mind
-- Maintain context across sessions
-- Self-correct without a reference point
-- Know your project's non-negotiables
-
-</div>
-
-</div>
-
-</v-click>
-
-<v-click>
-
-<div class="mt-3 text-center text-regent-secondary">
-SDD doesn't replace AI capability — it <strong>channels</strong> it.<br/>
-The better the AI gets, the more valuable structured specifications become.
-</div>
-
-</v-click>
-
-</div>
-
-<!--
-- "AI is so good I don't need structure"
-- The better AI gets → the MORE important good instructions are
-- Powerful tool + vague instructions = wrong things at scale
-- SDD doesn't slow AI down — it channels its power
-- Analogy: race car without steering wheel = very fast way to crash
--->
-
+poll: "After hearing the objections and responses, where do you stand?"
+pollOptions: ["More convinced than before", "About the same", "Less convinced", "Need to try it first"]
 ---
 
 # "What about when requirements change?"
@@ -1057,6 +904,10 @@ Update the spec, not patch the code.
 
 </div>
 
+<div class="absolute bottom-10 right-6 w-72 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
+  <LivePoll :question="$frontmatter.poll" />
+</div>
+
 <!--
 - Requirements WILL change — that's not a question
 - The question: how painful is it when they do?
@@ -1065,11 +916,12 @@ Update the spec, not patch the code.
 - New plan → new tasks → new code → new tests
 - Constitution catches violations, tests validate the change
 - SDD doesn't prevent change — it makes change cheap and safe
+- POLL: final sentiment check — audience votes while absorbing the argument
 -->
 
 ---
 
-# Where SDD Transforms Work
+# Fix the spec, not the code
 
 <div class="mt-3 grid grid-cols-2 gap-4 text-sm">
 
@@ -1100,6 +952,21 @@ Update the spec, not patch the code.
 </div>
 
 </v-click>
+
+</div>
+
+<!--
+- Daily workflow wins — devs and testers feel this every day
+- **Debugging:** trace bug → spec → fix spec → regenerate → tests pass
+- **Refactoring:** update spec, constitution guards constraints
+- Remember the decay spiral? This is how you escape it
+-->
+
+---
+
+# Hand off specs, not tribal knowledge
+
+<div class="mt-3 grid grid-cols-2 gap-4 text-sm">
 
 <v-click>
 
@@ -1132,114 +999,10 @@ Update the spec, not patch the code.
 </div>
 
 <!--
-- Where this hits hardest for Regent:
-- **Debugging:** read the spec, find the mismatch — not 500 lines of AI code
-- **Refactoring:** restructure spec and regenerate
-- **Client handoffs:** hand off specs + constitution → client's AI follows YOUR rules
-- **Legacy modernization:** spec the target state, constitution prevents old anti-patterns
--->
-
----
-
-# The SDD Lifecycle
-
-<div class="mt-2">
-
-```mermaid
-graph LR
-    A["Constitution"] --> B["Specify"]
-    B --> C["Clarify"]
-    C --> D["Plan"]
-    D --> E["Tasks"]
-    E --> F["Implement"]
-    F -.->|"Bug / Change /<br/>New feature"| B
-    F -.->|"Evolve<br/>principles"| A
-
-    style A fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
-    style B fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
-    style C fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
-    style D fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
-    style E fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
-    style F fill:#4D4E5C,stroke:#0099CC,color:#F8F8F8
-```
-
-</div>
-
-<div class="mt-2 text-center text-regent-secondary text-sm">
-
-SDD is a <strong>continuous cycle</strong>, not a one-time process. Every change feeds back into specifications.
-
-</div>
-
-<!--
-- Full lifecycle — a cycle, not a pipeline
-- Requirements change → back to Specify
-- Bug found → back to Specify
-- New feature → back to Specify
-- Even the constitution evolves as the project matures
-- Visual proof: SDD is the opposite of waterfall
--->
-
----
-
-# Getting Started
-
-<div class="mt-4">
-
-<v-click>
-
-```bash
-# Initialize spec-kit in any project
-uvx --from spec-kit speckit init
-```
-
-</v-click>
-
-<v-click>
-
-<div class="mt-4 grid grid-cols-2 gap-6">
-<div class="p-4 rounded bg-regent-master">
-
-### First steps
-1. Run `/speckit.constitution` to set up project rules
-2. Run `/speckit.specify` for your first feature
-3. Run `/speckit.clarify` to resolve ambiguities
-4. Run `/speckit.plan` to create technical plan
-5. Run `/speckit.tasks` to break down work
-6. Let the AI implement from specs
-
-</div>
-<div class="p-4 rounded bg-regent-master">
-
-### Resources
-- **GitHub**: github.com/github/spec-kit
-- **Docs**: Full quick-start guide included
-- **Works with**: Copilot, Claude Code, Gemini CLI
-- **License**: MIT (free and open source)
-
-</div>
-</div>
-
-</v-click>
-
-<v-click>
-
-<div class="mt-4 text-center text-regent-secondary">
-
-Start small: pick **one feature** and try the full workflow. You'll feel the difference immediately.
-
-</div>
-
-</v-click>
-
-</div>
-
-<!--
-- One command to initialize
-- Follow the six steps
-- Advice: start small — pick ONE feature and try the full workflow
-- You'll feel the difference immediately: clearer requirements, consistent output
-- Full quick-start guide and examples in the repo
+- Organizational wins — PMs and senior staff care about these
+- **Client handoffs:** specs + constitution travel with the project
+- **Legacy modernization:** spec the target, constitution prevents anti-patterns
+- These scale across the company, not just one developer's workflow
 -->
 
 ---
@@ -1267,22 +1030,30 @@ Start small: pick **one feature** and try the full workflow. You'll feel the dif
 layout: center
 ---
 
-# One Thing to Try This Week
+# Before your next feature, spend 10 minutes writing a spec
 
-<div class="flex flex-col items-center mt-12">
+<div class="flex flex-col items-center mt-6">
 
 <div class="text-2xl text-regent-light leading-relaxed text-center max-w-xl">
-Before your next feature, spend <strong class="text-regent-bright">10 minutes</strong> writing a spec.
+Write specs before code.
 </div>
 
-<div class="mt-8 text-xl text-regent-secondary text-center">
+<div class="mt-4 text-lg text-regent-secondary text-center">
 Just the <strong>What</strong> and <strong>Why</strong>. No How.
 </div>
 
 <v-click>
 
-<div class="mt-8 text-regent-secondary text-sm opacity-70">
-That's it. See what changes.
+<div class="mt-6 p-3 rounded bg-regent-master text-sm max-w-lg">
+
+```bash
+uvx --from spec-kit speckit init    # One command to start
+```
+
+<div class="mt-2 text-regent-secondary text-center">
+github.com/github/spec-kit &middot; MIT license &middot; Works with Copilot, Claude Code, Gemini CLI
+</div>
+
 </div>
 
 </v-click>
@@ -1290,10 +1061,11 @@ That's it. See what changes.
 </div>
 
 <!--
+- THE ARROW: Write specs before code — that's the one takeaway
 - Not asking for a whole new methodology overnight
-- Just 10 minutes before your next feature
-- Write down WHAT it should do and WHY — not how
-- See how it changes the AI conversation and output
+- Just 10 minutes: write WHAT it should do and WHY
+- The tool is spec-kit, one command to initialize
+- But the practice works with any workflow — even a markdown file
 - If it works → try the full workflow next time
 -->
 
@@ -1306,8 +1078,6 @@ layout: center
 <div class="flex flex-col items-center mt-8">
   <img src="/images/regent-logo.svg" class="h-12 mb-8" alt="Regent" />
 
-  <div class="text-2xl text-regent-light mb-6">Questions?</div>
-
   <div class="text-regent-secondary space-y-2">
     <p>Mikael Pettersson &middot; mikael.pettersson@regent.se</p>
     <p class="text-sm">github.com/github/spec-kit</p>
@@ -1315,7 +1085,7 @@ layout: center
 </div>
 
 <!--
-- Happy to take questions
 - GitHub repo has everything you need to get started
 - Happy to pair with anyone who wants to try it on a real feature
+- Remember: before your next feature, 10 minutes writing a spec
 -->

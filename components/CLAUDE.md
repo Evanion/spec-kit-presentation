@@ -7,6 +7,8 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #2588 | 2:27 PM | 🔄 | Made AudienceQrCode size configurable via props | ~277 |
+| #2495 | 9:38 AM | ⚖️ | PR #1 CLAUDE.md Compliance Review Completed - No Violations Found | ~446 |
 | #2487 | 9:02 AM | 🔴 | Fixed TopQuestions session ID resolution and reactivity | ~454 |
 | #2479 | 8:51 AM | 🟣 | Created LivePoll component for slide view poll status indicator | ~417 |
 | #2451 | 8:27 AM | ⚖️ | QR code library selection for Slidev presentation | ~423 |

@@ -1,4 +1,4 @@
-import { ref, watch, onUnmounted } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import { useSupabase } from './useSupabase'
 import { usePresenterAuth } from './usePresenterAuth'
 import { FUNCTIONS_BASE, BROADCAST_CHANNEL, SLIDE_CHANGE_EVENT } from '../lib/constants'
@@ -31,15 +31,6 @@ export function useSlideSync() {
     } catch {
       // Fail silently — slides work without backend
     }
-  }
-
-  /**
-   * Presenter: watch Slidev navigation and sync
-   */
-  function watchPresenterNav(currentPageRef: { value: number }) {
-    watch(() => currentPageRef.value, (page) => {
-      syncSlide(page)
-    })
   }
 
   /**
@@ -82,7 +73,6 @@ export function useSlideSync() {
   return {
     currentSlide,
     syncSlide,
-    watchPresenterNav,
     subscribeAudience,
     cleanup,
   }
