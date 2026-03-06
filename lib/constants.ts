@@ -1,7 +1,6 @@
 export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string
 export const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string
 export const PRESENTER_TOKEN = import.meta.env.VITE_PRESENTER_TOKEN as string
-export const AUDIENCE_URL = import.meta.env.VITE_AUDIENCE_URL as string
 
 export const MAX_QUESTION_LENGTH = 300
 export const RATE_LIMIT_QUESTIONS = 3
