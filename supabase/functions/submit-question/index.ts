@@ -1,6 +1,8 @@
 import { corsHeaders, handleCors } from '../_shared/cors.ts'
 import { createAdminClient } from '../_shared/supabase.ts'
-import { questionsLimiter } from '../_shared/ratelimit.ts'
+
+const QUESTION_LIMIT = 3
+const QUESTION_WINDOW_SECONDS = 60
 
 function validateQuestionContent(text: string): { valid: boolean; error: string | null } {
   const trimmed = text.trim()
@@ -50,22 +52,7 @@ Deno.serve(async (req) => {
     })
   }
 
-  // Rate limiting
-  const { success, limit, remaining, reset } = await questionsLimiter.limit(device_id)
-  const rateLimitHeaders = {
-    'X-RateLimit-Limit': String(limit),
-    'X-RateLimit-Remaining': String(remaining),
-    'X-RateLimit-Reset': String(reset),
-  }
-
-  if (!success) {
-    return new Response(JSON.stringify({ error: 'Slow down — try again in a moment' }), {
-      status: 429,
-      headers: { ...corsHeaders, ...rateLimitHeaders, 'Content-Type': 'application/json' },
-    })
-  }
-
-  // Validate content
+  // Validate content early to avoid a DB round-trip on bad input
   const validation = validateQuestionContent(content)
   if (!validation.valid) {
     return new Response(JSON.stringify({ error: validation.error }), {
@@ -97,6 +84,22 @@ Deno.serve(async (req) => {
     })
   }
 
+  // Rate limit: max 3 questions per device per 60s, checked against the DB
+  const windowStart = new Date(Date.now() - QUESTION_WINDOW_SECONDS * 1000).toISOString()
+  const { count } = await supabase
+    .from('questions')
+    .select('id', { count: 'exact', head: true })
+    .eq('session_id', session_id)
+    .eq('device_id', device_id)
+    .gte('created_at', windowStart)
+
+  if ((count ?? 0) >= QUESTION_LIMIT) {
+    return new Response(JSON.stringify({ error: 'Slow down — try again in a moment' }), {
+      status: 429,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+
   // Insert question
   const { data: question, error } = await supabase
     .from('questions')
@@ -117,6 +120,6 @@ Deno.serve(async (req) => {
 
   return new Response(JSON.stringify({ question }), {
     status: 201,
-    headers: { ...corsHeaders, ...rateLimitHeaders, 'Content-Type': 'application/json' },
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   })
 })

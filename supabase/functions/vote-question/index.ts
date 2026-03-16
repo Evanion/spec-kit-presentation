@@ -1,6 +1,5 @@
 import { corsHeaders, handleCors } from '../_shared/cors.ts'
 import { createAdminClient } from '../_shared/supabase.ts'
-import { votesLimiter } from '../_shared/ratelimit.ts'
 
 Deno.serve(async (req) => {
   const corsResponse = handleCors(req)
@@ -20,21 +19,6 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ error: 'Invalid direction' }), {
       status: 400,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
-  }
-
-  // Rate limiting (shared "votes" bucket with submit-vote)
-  const { success, limit, remaining, reset } = await votesLimiter.limit(device_id)
-  const rateLimitHeaders = {
-    'X-RateLimit-Limit': String(limit),
-    'X-RateLimit-Remaining': String(remaining),
-    'X-RateLimit-Reset': String(reset),
-  }
-
-  if (!success) {
-    return new Response(JSON.stringify({ error: 'Slow down — try again in a moment' }), {
-      status: 429,
-      headers: { ...corsHeaders, ...rateLimitHeaders, 'Content-Type': 'application/json' },
     })
   }
 
@@ -67,7 +51,7 @@ Deno.serve(async (req) => {
     })
   }
 
-  // Check existing vote
+  // Check existing vote (one vote per device per question — enforced by DB unique constraint)
   const { data: existingVote } = await supabase
     .from('question_votes')
     .select('id, direction')
@@ -116,6 +100,6 @@ Deno.serve(async (req) => {
     question: { id: question_id, score },
   }), {
     status: 200,
-    headers: { ...corsHeaders, ...rateLimitHeaders, 'Content-Type': 'application/json' },
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   })
 })
