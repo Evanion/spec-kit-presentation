@@ -1,6 +1,5 @@
 import { corsHeaders, handleCors } from '../_shared/cors.ts'
 import { createAdminClient } from '../_shared/supabase.ts'
-import { votesLimiter } from '../_shared/ratelimit.ts'
 
 Deno.serve(async (req) => {
   const corsResponse = handleCors(req)
@@ -20,21 +19,6 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify({ error: 'Missing required fields' }), {
       status: 400,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
-  }
-
-  // Rate limiting (shared "votes" bucket with vote-question)
-  const { success, limit, remaining, reset } = await votesLimiter.limit(device_id)
-  const rateLimitHeaders = {
-    'X-RateLimit-Limit': String(limit),
-    'X-RateLimit-Remaining': String(remaining),
-    'X-RateLimit-Reset': String(reset),
-  }
-
-  if (!success) {
-    return new Response(JSON.stringify({ error: 'Slow down — try again in a moment' }), {
-      status: 429,
-      headers: { ...corsHeaders, ...rateLimitHeaders, 'Content-Type': 'application/json' },
     })
   }
 
@@ -84,7 +68,7 @@ Deno.serve(async (req) => {
     })
   }
 
-  // Upsert vote (one vote per device per poll)
+  // Upsert vote (one vote per device per poll — enforced by DB unique constraint)
   const { data: existingVote } = await supabase
     .from('poll_votes')
     .select('id, selected_option')
@@ -121,6 +105,6 @@ Deno.serve(async (req) => {
     },
   }), {
     status: 200,
-    headers: { ...corsHeaders, ...rateLimitHeaders, 'Content-Type': 'application/json' },
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
   })
 })
