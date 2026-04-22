@@ -20,16 +20,17 @@ const props = withDefaults(defineProps<{
 
 const { supabase, isAvailable } = useSupabase()
 const { isPresenter, getAuthHeaders } = usePresenterAuth()
-const { getPollForSlide } = useSession()
+const { getPollForSlide, polls } = useSession()
 
-// Resolve poll ID: use prop if provided, otherwise look up by slide number
+// Resolve poll ID: prop → slide number lookup → question-text lookup
 const resolvedPollId = computed(() => {
   if (props.pollId) return props.pollId
   if (props.slideNumber) {
     const poll = getPollForSlide(props.slideNumber)
-    return poll?.id || ''
+    if (poll?.id) return poll.id
   }
-  return ''
+  const byQuestion = polls.value.find((p) => p.question === props.question)
+  return byQuestion?.id || ''
 })
 
 const voteCounts = ref<number[]>(props.options.map(() => 0))
@@ -132,32 +133,42 @@ onUnmounted(() => {
 
 <template>
   <div class="poll-results" v-if="isAvailable">
-    <div class="poll-question">{{ question }}</div>
-
-    <div class="poll-bars">
-      <div v-for="(option, i) in options" :key="i" class="poll-bar-row">
-        <div class="poll-bar-label">{{ option }}</div>
-        <div class="poll-bar-track">
-          <div
-            class="poll-bar-fill"
-            :style="{ width: `${getPercentage(voteCounts[i])}%` }"
-          />
-        </div>
-        <div class="poll-bar-count">{{ voteCounts[i] }} <span class="poll-bar-pct">({{ getPercentage(voteCounts[i]) }}%)</span></div>
+    <template v-if="totalVotes === 0 && pollStatus !== 'closed'">
+      <div class="live-poll-indicator">
+        <span class="live-dot" /> Voting is active
       </div>
-    </div>
+      <div class="poll-question">{{ question }}</div>
+      <div class="live-poll-note">Vote on your phone!</div>
+    </template>
 
-    <div class="poll-footer">
-      <span class="poll-total">{{ totalVotes }} vote{{ totalVotes !== 1 ? 's' : '' }}</span>
-      <span v-if="pollStatus === 'closed'" class="poll-closed-badge">Poll Closed</span>
-      <button
-        v-if="isPresenter && pollStatus === 'open'"
-        class="poll-close-btn"
-        @click="closePoll"
-      >
-        Close Poll
-      </button>
-    </div>
+    <template v-else>
+      <div class="poll-question">{{ question }}</div>
+
+      <div class="poll-bars">
+        <div v-for="(option, i) in options" :key="i" class="poll-bar-row">
+          <div class="poll-bar-label">{{ option }}</div>
+          <div class="poll-bar-track">
+            <div
+              class="poll-bar-fill"
+              :style="{ width: `${getPercentage(voteCounts[i])}%` }"
+            />
+          </div>
+          <div class="poll-bar-count">{{ voteCounts[i] }} <span class="poll-bar-pct">({{ getPercentage(voteCounts[i]) }}%)</span></div>
+        </div>
+      </div>
+
+      <div class="poll-footer">
+        <span class="poll-total">{{ totalVotes }} vote{{ totalVotes !== 1 ? 's' : '' }}</span>
+        <span v-if="pollStatus === 'closed'" class="poll-closed-badge">Poll Closed</span>
+        <button
+          v-if="isPresenter && pollStatus === 'open'"
+          class="poll-close-btn"
+          @click="closePoll"
+        >
+          Close Poll
+        </button>
+      </div>
+    </template>
   </div>
 
   <div v-else class="poll-unavailable">
@@ -263,5 +274,34 @@ onUnmounted(() => {
   color: #DADCF1;
   opacity: 0.5;
   font-size: 0.9rem;
+}
+
+.live-poll-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #4CAF50;
+  margin-bottom: 8px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4CAF50;
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.live-poll-note {
+  font-size: 0.8rem;
+  color: #DADCF1;
+  opacity: 0.7;
+  margin-top: 4px;
 }
 </style>

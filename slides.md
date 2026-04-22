@@ -197,8 +197,8 @@ Also add rate limiting. And tests."
 
 </div>
 
-<div class="absolute bottom-10 right-6 w-72 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
-  <LivePoll :question="$frontmatter.poll" />
+<div class="absolute bottom-10 right-6 w-96 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
+  <PollResults :question="$frontmatter.poll" :options="$frontmatter.pollOptions" />
 </div>
 
 <!--
@@ -527,8 +527,8 @@ pollOptions: ["Yes, immediately", "Maybe, need to see more", "Not convinced yet"
 15 minutes of specification prevents 3 hours of rework.
 </div>
 
-<div class="absolute bottom-10 right-6 w-72 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
-  <LivePoll :question="$frontmatter.poll" />
+<div class="absolute bottom-10 right-6 w-96 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
+  <PollResults :question="$frontmatter.poll" :options="$frontmatter.pollOptions" />
 </div>
 
 <!--
@@ -904,8 +904,8 @@ Update the spec, not patch the code.
 
 </div>
 
-<div class="absolute bottom-10 right-6 w-72 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
-  <LivePoll :question="$frontmatter.poll" />
+<div class="absolute bottom-10 right-6 w-96 p-3 rounded bg-regent-dark border border-regent-cyan/30 text-xs">
+  <PollResults :question="$frontmatter.poll" :options="$frontmatter.pollOptions" />
 </div>
 
 <!--
